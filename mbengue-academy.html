@@ -1,0 +1,2385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach Mbengue Academy — Apprends le CSS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   VARIABLES GLOBALES
+═══════════════════════════════════════════════ */
+:root {
+  --bg:         #09090f;
+  --bg2:        #0f1018;
+  --surface:    #13141f;
+  --card:       #191b2a;
+  --card2:      #1e2035;
+  --border:     #252840;
+  --border2:    #2e3152;
+  --gold:       #f5c842;
+  --gold2:      #e8a800;
+  --accent:     #5b8af0;
+  --green:      #3ecf8e;
+  --pink:       #e05fa0;
+  --orange:     #f07850;
+  --purple:     #9b72f5;
+  --text:       #e4e8ff;
+  --text2:      #a0a8cc;
+  --muted:      #5a6080;
+  --code-bg:    #07080e;
+  --html-c:     #f28779;
+  --attr-c:     #f5c842;
+  --val-c:      #95e6cb;
+  --sel-c:      #e05fa0;
+  --prop-c:     #82aaff;
+  --cval-c:     #c3e88d;
+  --comment-c:  #3d4466;
+  --sidebar-w:  280px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+
+/* ═══════════════════════════════════════════════
+   ÉCRAN D'ACCUEIL (LANDING)
+═══════════════════════════════════════════════ */
+#landing{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:2rem;
+  position:relative;
+  overflow:hidden;
+}
+#landing::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(91,138,240,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 80% 80%, rgba(155,114,245,0.08) 0%, transparent 60%);
+  pointer-events:none;
+}
+.landing-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(245,200,66,0.1);
+  border:1px solid rgba(245,200,66,0.3);
+  border-radius:99px;
+  padding:6px 18px;
+  font-size:0.75rem;
+  color:var(--gold);
+  font-family:'DM Mono',monospace;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-bottom:2rem;
+  animation:fadeUp 0.6s ease both;
+}
+.landing-logo{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.5rem,6vw,4.5rem);
+  font-weight:800;
+  line-height:1.1;
+  margin-bottom:1rem;
+  animation:fadeUp 0.7s 0.1s ease both;
+}
+.landing-logo .coach{color:var(--gold);}
+.landing-logo .academy{
+  background:linear-gradient(135deg,var(--accent),var(--purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.landing-sub{
+  font-size:1.1rem;
+  color:var(--text2);
+  max-width:520px;
+  line-height:1.8;
+  margin-bottom:2.5rem;
+  animation:fadeUp 0.7s 0.2s ease both;
+}
+.landing-stats{
+  display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;
+  margin-bottom:2.5rem;
+  animation:fadeUp 0.7s 0.3s ease both;
+}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--gold);}
+.stat-lbl{font-size:0.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.landing-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--gold);
+  color:#0a0800;
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:1rem;
+  padding:14px 36px;
+  border-radius:12px;
+  border:none;cursor:pointer;
+  transition:all 0.2s;
+  animation:fadeUp 0.7s 0.4s ease both;
+}
+.landing-btn:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,200,66,0.3);}
+.landing-modules{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:0.75rem;
+  max-width:780px;
+  margin-top:3rem;
+  animation:fadeUp 0.7s 0.5s ease both;
+}
+.module-pill{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 16px;
+  font-size:0.82rem;
+  color:var(--text2);
+  text-align:left;
+  display:flex;align-items:center;gap:8px;
+}
+.module-pill .mp-num{
+  width:22px;height:22px;border-radius:50%;
+  background:rgba(91,138,240,0.15);
+  border:1px solid rgba(91,138,240,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.68rem;font-family:'DM Mono',monospace;
+  color:var(--accent);flex-shrink:0;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══════════════════════════════════════════════
+   APP (INTERFACE PRINCIPALE)
+═══════════════════════════════════════════════ */
+#app{display:none;}
+#app.visible{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+
+/* ── TOP BAR ── */
+.topbar{
+  height:54px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;
+  padding:0 1rem;
+  gap:1rem;
+  flex-shrink:0;
+  z-index:100;
+}
+.topbar-logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;font-size:0.95rem;
+  color:var(--gold);
+  white-space:nowrap;
+}
+.topbar-logo span{color:var(--text2);font-weight:400;font-size:0.78rem;margin-left:4px;}
+.topbar-progress-wrap{
+  flex:1;display:flex;align-items:center;gap:10px;
+  padding:0 1rem;
+}
+.progress-track{
+  flex:1;height:5px;background:var(--border);border-radius:99px;overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--gold),var(--orange));
+  border-radius:99px;
+  transition:width 0.5s ease;
+}
+.progress-pct{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--gold);white-space:nowrap;}
+.topbar-xp{
+  background:rgba(245,200,66,0.1);
+  border:1px solid rgba(245,200,66,0.25);
+  border-radius:99px;
+  padding:4px 12px;
+  font-family:'DM Mono',monospace;
+  font-size:0.72rem;
+  color:var(--gold);
+  white-space:nowrap;
+}
+.topbar-btn{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:5px 12px;
+  font-size:0.78rem;
+  color:var(--text2);
+  cursor:pointer;
+  transition:all 0.2s;
+  white-space:nowrap;
+}
+.topbar-btn:hover{border-color:var(--accent);color:var(--text);}
+
+/* ── BODY APP ── */
+.app-body{flex:1;display:flex;overflow:hidden;}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar-w);
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.sidebar-head{
+  padding:1rem 1rem 0.5rem;
+  border-bottom:1px solid var(--border);
+}
+.sidebar-title{
+  font-size:0.65rem;font-family:'DM Mono',monospace;
+  color:var(--muted);letter-spacing:2px;text-transform:uppercase;
+}
+.sidebar-scroll{flex:1;overflow-y:auto;padding:0.5rem 0;}
+.nav-section{
+  font-size:0.62rem;font-family:'DM Mono',monospace;
+  color:var(--gold);letter-spacing:2px;text-transform:uppercase;
+  padding:0.75rem 1rem 0.25rem;
+}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:0.55rem 1rem;
+  cursor:pointer;
+  font-size:0.83rem;
+  color:var(--muted);
+  border-left:3px solid transparent;
+  transition:all 0.15s;
+  position:relative;
+}
+.nav-item:hover{background:rgba(91,138,240,0.05);color:var(--text);}
+.nav-item.active{
+  background:rgba(245,200,66,0.07);
+  color:var(--gold);
+  border-left-color:var(--gold);
+  font-weight:600;
+}
+.nav-item.done{color:var(--green);}
+.nav-item.done .nav-check{display:flex;}
+.nav-num{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--card);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.65rem;font-family:'DM Mono',monospace;
+  flex-shrink:0;color:var(--muted);
+}
+.nav-item.active .nav-num{background:rgba(245,200,66,0.15);border-color:rgba(245,200,66,0.4);color:var(--gold);}
+.nav-item.done .nav-num{background:rgba(62,207,142,0.15);border-color:rgba(62,207,142,0.4);color:var(--green);}
+.nav-check{
+  display:none;
+  position:absolute;right:10px;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--green);
+  align-items:center;justify-content:center;
+  font-size:0.6rem;color:#0a1a12;font-weight:700;
+}
+.nav-sep{height:1px;background:var(--border);margin:0.4rem 1rem;}
+
+/* ── MAIN ── */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+
+/* ── STEP BANNER ── */
+.step-banner{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:1rem 1.5rem;
+  flex-shrink:0;
+  position:relative;
+  overflow:hidden;
+}
+.step-banner::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--orange),var(--pink));
+}
+.step-meta{
+  display:flex;align-items:center;gap:10px;margin-bottom:0.4rem;flex-wrap:wrap;
+}
+.step-num-tag{
+  font-family:'DM Mono',monospace;font-size:0.65rem;
+  color:var(--orange);letter-spacing:2px;text-transform:uppercase;
+}
+.step-tags{display:flex;gap:5px;flex-wrap:wrap;}
+.stag{
+  padding:2px 8px;border-radius:99px;
+  font-family:'DM Mono',monospace;font-size:0.65rem;
+  border:1px solid;
+}
+.stag-css{color:var(--accent);border-color:rgba(91,138,240,0.3);background:rgba(91,138,240,0.08);}
+.stag-html{color:var(--html-c);border-color:rgba(242,135,121,0.3);background:rgba(242,135,121,0.08);}
+.step-banner h2{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:0.2rem;}
+.step-banner p{font-size:0.85rem;color:var(--text2);max-width:700px;}
+
+/* ── WORKSPACE ── */
+.workspace{
+  flex:1;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:36px 1fr;
+  overflow:hidden;
+}
+.tab-bar-left,.tab-bar-right{
+  display:flex;align-items:stretch;
+  background:var(--code-bg);
+  border-bottom:1px solid var(--border);
+}
+.tab-bar-left{border-right:1px solid var(--border);}
+.wtab{
+  padding:0 16px;
+  font-family:'DM Mono',monospace;font-size:0.73rem;
+  color:var(--muted);cursor:pointer;
+  border-bottom:2px solid transparent;
+  display:flex;align-items:center;gap:6px;
+  transition:all 0.15s;
+  white-space:nowrap;
+}
+.wtab:hover{color:var(--text);}
+.wtab.t-html.active{color:var(--html-c);border-color:var(--html-c);}
+.wtab.t-css.active{color:var(--accent);border-color:var(--accent);}
+.wtab.t-prev.active{color:var(--green);border-color:var(--green);}
+.wtab.t-expl.active{color:var(--orange);border-color:var(--orange);}
+.wtab.t-meta.active{color:var(--purple);border-color:var(--purple);}
+
+/* ── CODE PANELS ── */
+.panel{display:none;overflow:auto;height:100%;}
+.panel.active{display:block;}
+.panel.border-right{border-right:1px solid var(--border);}
+
+/* EDITOR PANEL */
+.editor-wrap{
+  display:flex;flex-direction:column;
+  height:100%;
+  background:var(--code-bg);
+}
+.editor-toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 12px;
+  border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,0.02);
+}
+.editor-label{font-size:0.65rem;font-family:'DM Mono',monospace;color:var(--muted);letter-spacing:1px;}
+.editor-run{
+  display:flex;align-items:center;gap:6px;
+  background:var(--green);
+  color:#0a1a0f;
+  border:none;border-radius:6px;
+  padding:4px 12px;
+  font-size:0.72rem;font-weight:700;cursor:pointer;
+  transition:all 0.15s;
+  font-family:'DM Sans',sans-serif;
+}
+.editor-run:hover{background:#2fb87a;}
+.code-textarea{
+  flex:1;width:100%;
+  background:transparent;
+  color:var(--text);
+  border:none;outline:none;resize:none;
+  font-family:'DM Mono',monospace;font-size:0.78rem;
+  line-height:1.8;
+  padding:1rem 1.25rem;
+  caret-color:var(--gold);
+}
+.code-textarea::selection{background:rgba(91,138,240,0.25);}
+
+/* READ-ONLY code panel */
+.code-ro{
+  background:var(--code-bg);
+  padding:1.25rem;
+  font-family:'DM Mono',monospace;
+  font-size:0.78rem;
+  line-height:1.85;
+  overflow:auto;
+  height:100%;
+}
+.code-ro pre{white-space:pre-wrap;word-break:break-word;}
+/* syntax */
+.ht{color:var(--html-c);}
+.ha{color:var(--attr-c);}
+.hv{color:var(--val-c);}
+.hc{color:var(--comment-c);font-style:italic;}
+.cs{color:var(--sel-c);}
+.cp{color:var(--prop-c);}
+.cv{color:var(--cval-c);}
+.cc{color:var(--comment-c);font-style:italic;}
+.cb{color:var(--muted);}
+
+/* ── PREVIEW ── */
+.preview-panel{
+  background:#fff;
+  height:100%;
+  display:none;
+}
+.preview-panel.active{display:block;}
+.preview-panel iframe{width:100%;height:100%;border:none;display:block;}
+
+/* ── EXPLANATION PANEL ── */
+.explain-panel{
+  background:var(--bg2);
+  height:100%;overflow-y:auto;
+  display:none;padding:1.25rem;
+}
+.explain-panel.active{display:block;}
+
+.metaphor-box{
+  background:linear-gradient(135deg,rgba(245,200,66,0.08),rgba(240,120,80,0.06));
+  border:1px solid rgba(245,200,66,0.2);
+  border-radius:12px;
+  padding:1rem 1.25rem;
+  margin-bottom:1rem;
+  position:relative;
+  overflow:hidden;
+}
+.metaphor-box::before{
+  content:'💡';
+  position:absolute;right:1rem;top:0.8rem;font-size:1.5rem;opacity:0.4;
+}
+.metaphor-title{
+  font-family:'DM Mono',monospace;font-size:0.65rem;
+  color:var(--gold);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:0.5rem;
+}
+.metaphor-text{font-size:0.88rem;color:var(--text2);line-height:1.7;}
+.metaphor-text strong{color:var(--gold);}
+
+.tip-box{
+  background:rgba(62,207,142,0.07);
+  border:1px solid rgba(62,207,142,0.2);
+  border-radius:10px;
+  padding:0.75rem 1rem;
+  margin-bottom:0.75rem;
+  font-size:0.84rem;color:var(--green);line-height:1.65;
+}
+.warn-box{
+  background:rgba(240,120,80,0.08);
+  border:1px solid rgba(240,120,80,0.2);
+  border-radius:10px;
+  padding:0.75rem 1rem;
+  margin-bottom:0.75rem;
+  font-size:0.84rem;color:var(--orange);line-height:1.65;
+}
+
+.prop-section-title{
+  font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;
+  color:var(--text);margin:1.25rem 0 0.75rem;
+  padding-bottom:6px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.prop-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:1rem 1.25rem;margin-bottom:0.6rem;
+}
+.prop-name{
+  font-family:'DM Mono',monospace;font-size:0.8rem;
+  color:var(--prop-c);font-weight:500;margin-bottom:0.35rem;
+}
+.prop-desc{font-size:0.83rem;color:var(--text2);line-height:1.65;margin-bottom:0.5rem;}
+.prop-ex{
+  background:var(--code-bg);border-radius:6px;
+  padding:8px 12px;
+  font-family:'DM Mono',monospace;font-size:0.73rem;
+  color:var(--cval-c);line-height:1.7;
+  border-left:3px solid var(--accent);
+}
+
+/* ── META / MÉMO ── */
+.meta-panel{
+  background:var(--bg2);height:100%;overflow-y:auto;
+  display:none;padding:1.25rem;
+}
+.meta-panel.active{display:block;}
+.recap-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:1.25rem;margin-bottom:1rem;
+}
+.recap-card h4{
+  font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;
+  color:var(--text);margin-bottom:0.75rem;
+  padding-bottom:6px;border-bottom:1px solid var(--border);
+}
+.recap-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;}
+.recap-item{
+  background:var(--card2);border-radius:8px;padding:8px 10px;
+  font-family:'DM Mono',monospace;font-size:0.72rem;
+}
+.ri-prop{color:var(--prop-c);}
+.ri-val{color:var(--cval-c);font-size:0.68rem;}
+.schema-box{
+  background:var(--code-bg);border:1px solid var(--border2);
+  border-radius:10px;padding:1.25rem;margin-bottom:1rem;
+  font-family:'DM Mono',monospace;font-size:0.75rem;
+  line-height:1.8;color:var(--text2);
+}
+
+/* ── BOTTOM BAR ── */
+.bottom-bar{
+  height:52px;
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 1.5rem;gap:1rem;
+  flex-shrink:0;
+}
+.bb-info{font-size:0.78rem;color:var(--muted);font-family:'DM Mono',monospace;}
+.bb-btns{display:flex;gap:0.5rem;}
+.btn-nav{
+  padding:7px 18px;border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;
+  cursor:pointer;border:none;transition:all 0.18s;
+}
+.btn-prev{background:var(--card);color:var(--text2);border:1px solid var(--border);}
+.btn-prev:hover{color:var(--text);border-color:var(--border2);}
+.btn-next{background:var(--gold);color:#0a0800;}
+.btn-next:hover{background:var(--gold2);transform:translateY(-1px);}
+.btn-done{background:var(--green);color:#0a1a0f;}
+.btn-done:hover{background:#2fb87a;}
+
+/* ── BADGE POPUP ── */
+.badge-popup{
+  position:fixed;bottom:80px;right:20px;
+  background:var(--card);border:1px solid var(--gold);
+  border-radius:16px;padding:1rem 1.5rem;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.5);
+  transform:translateX(120%);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  z-index:999;max-width:280px;
+}
+.badge-popup.show{transform:translateX(0);}
+.badge-icon{font-size:2rem;}
+.badge-text h4{font-family:'Syne',sans-serif;font-size:0.9rem;color:var(--gold);}
+.badge-text p{font-size:0.78rem;color:var(--text2);}
+
+/* ═══════════════════════════════════════════════
+   PAGE CONTACT
+═══════════════════════════════════════════════ */
+#contact-page{display:none;}
+#contact-page.visible{display:flex;flex-direction:column;min-height:100vh;}
+.contact-nav{
+  height:60px;background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;padding:0 2rem;
+}
+.contact-nav .logo{font-family:'Syne',sans-serif;font-weight:800;color:var(--gold);}
+.contact-nav .back-btn{
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:6px 14px;font-size:0.82rem;color:var(--text2);cursor:pointer;
+  transition:all 0.2s;
+}
+.contact-nav .back-btn:hover{border-color:var(--accent);color:var(--text);}
+.contact-body{
+  flex:1;display:grid;grid-template-columns:1fr 1fr;
+  max-width:1000px;margin:0 auto;width:100%;padding:3rem 2rem;gap:3rem;
+}
+.contact-left h1{
+  font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;margin-bottom:0.75rem;
+}
+.contact-left h1 span{color:var(--gold);}
+.contact-left p{color:var(--text2);line-height:1.7;margin-bottom:1.5rem;font-size:0.95rem;}
+.contact-info-item{
+  display:flex;align-items:center;gap:12px;
+  padding:0.75rem 0;border-bottom:1px solid var(--border);
+  font-size:0.88rem;color:var(--text2);
+}
+.contact-info-item .ci-icon{
+  width:36px;height:36px;border-radius:8px;
+  background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.2);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
+}
+.contact-right{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:2rem;
+}
+.contact-right h3{font-family:'Syne',sans-serif;font-size:1.1rem;margin-bottom:1.5rem;color:var(--text);}
+.form-group{margin-bottom:1.25rem;}
+.form-group label{
+  display:block;font-size:0.8rem;color:var(--text2);
+  margin-bottom:0.4rem;font-weight:500;
+}
+.form-group input,.form-group textarea,.form-group select{
+  width:100%;
+  background:var(--card2);border:1px solid var(--border2);
+  border-radius:8px;padding:10px 14px;
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.88rem;
+  outline:none;transition:border-color 0.2s;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+  border-color:var(--gold);
+}
+.form-group textarea{height:100px;resize:vertical;}
+.form-group select option{background:var(--card2);}
+.form-submit{
+  width:100%;padding:12px;
+  background:var(--gold);color:#0a0800;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;
+  border:none;border-radius:8px;cursor:pointer;
+  transition:all 0.2s;
+}
+.form-submit:hover{background:var(--gold2);transform:translateY(-1px);}
+.form-success{
+  display:none;text-align:center;padding:2rem;
+}
+.form-success.show{display:block;}
+.form-success .fs-icon{font-size:3rem;margin-bottom:1rem;}
+.form-success h4{font-family:'Syne',sans-serif;font-size:1.1rem;color:var(--green);margin-bottom:0.5rem;}
+.form-success p{color:var(--text2);font-size:0.88rem;}
+
+/* responsive */
+@media(max-width:768px){
+  .workspace{grid-template-columns:1fr;grid-template-rows:36px 1fr 36px 1fr;}
+  .sidebar{display:none;}
+  .contact-body{grid-template-columns:1fr;}
+  .recap-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 1 : LANDING
+════════════════════════════════════════════════════════ -->
+<div id="landing">
+  <div class="landing-badge">🏆 Coach Mbengue Academy</div>
+  <h1 class="landing-logo">
+    <span class="coach">Coach Mbengue</span><br>
+    <span class="academy">CSS Academy</span>
+  </h1>
+  <p class="landing-sub">
+    Apprends le CSS étape par étape, de zéro jusqu'à créer un vrai site web complet.
+    Code interactif, explications claires, métaphores du quotidien.
+  </p>
+  <div class="landing-stats">
+    <div class="stat-item"><div class="stat-num">10</div><div class="stat-lbl">Leçons</div></div>
+    <div class="stat-item"><div class="stat-num">50+</div><div class="stat-lbl">Propriétés CSS</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-lbl">Pratique</div></div>
+  </div>
+  <button class="landing-btn" onclick="startApp()">🚀 Commencer l'apprentissage</button>
+  <div style="margin-top:1rem;font-size:0.8rem;color:var(--muted);">
+    <a href="#" onclick="showContact()" style="color:var(--accent);text-decoration:none;">📩 Contacter Coach Mbengue</a>
+  </div>
+  <div class="landing-modules">
+    <div class="module-pill"><div class="mp-num">1</div>Structure HTML</div>
+    <div class="module-pill"><div class="mp-num">2</div>Couleurs & Texte</div>
+    <div class="module-pill"><div class="mp-num">3</div>Box Model</div>
+    <div class="module-pill"><div class="mp-num">4</div>Bordures & Fonds</div>
+    <div class="module-pill"><div class="mp-num">5</div>Navbar (float)</div>
+    <div class="module-pill"><div class="mp-num">6</div>Section Hero</div>
+    <div class="module-pill"><div class="mp-num">7</div>Colonnes</div>
+    <div class="module-pill"><div class="mp-num">8</div>Footer</div>
+    <div class="module-pill"><div class="mp-num">9</div>Liens & Hover</div>
+    <div class="module-pill"><div class="mp-num">10</div>Site Complet !</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 2 : APP PRINCIPALE
+════════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-logo">Coach Mbengue <span>CSS Academy</span></div>
+    <div class="topbar-progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:10%"></div></div>
+      <div class="progress-pct" id="prog-pct">Leçon 1/10</div>
+    </div>
+    <div class="topbar-xp" id="xp-display">⭐ 0 XP</div>
+    <button class="topbar-btn" onclick="showContact()">📩 Contact</button>
+    <button class="topbar-btn" onclick="goLanding()">🏠 Accueil</button>
+  </div>
+
+  <div class="app-body">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-head">
+        <div class="sidebar-title">Plan du cours</div>
+      </div>
+      <div class="sidebar-scroll" id="sidebar-nav"></div>
+    </aside>
+
+    <!-- MAIN AREA -->
+    <div class="main-area">
+      <div class="step-banner" id="step-banner"></div>
+
+      <div class="workspace" id="workspace"></div>
+
+      <div class="bottom-bar">
+        <span class="bb-info" id="bb-info"></span>
+        <div class="bb-btns">
+          <button class="btn-nav btn-prev" id="btn-prev" onclick="prevStep()">← Précédent</button>
+          <button class="btn-nav btn-next" id="btn-next" onclick="nextStep()">Suivant →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BADGE POPUP -->
+<div class="badge-popup" id="badge-popup">
+  <div class="badge-icon" id="badge-icon">🏅</div>
+  <div class="badge-text">
+    <h4 id="badge-title">Badge débloqué !</h4>
+    <p id="badge-desc">Tu progresses bien !</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 3 : CONTACT
+════════════════════════════════════════════════════════ -->
+<div id="contact-page">
+  <nav class="contact-nav">
+    <div class="logo">Coach Mbengue Academy</div>
+    <button class="back-btn" onclick="hideContact()">← Retour au cours</button>
+  </nav>
+  <div class="contact-body">
+    <div class="contact-left">
+      <h1>Contacte<br><span>Coach Mbengue</span></h1>
+      <p>Une question sur le cours ? Tu bloques sur un exercice ? Tu veux t'inscrire à une session en direct ? Écris-moi, je réponds à tous les messages !</p>
+      <div class="contact-info-item">
+        <div class="ci-icon">📧</div>
+        <div>
+          <div style="font-weight:600;color:var(--text)">Email</div>
+          <div>coach.mbengue@academy.sn</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">📱</div>
+        <div>
+          <div style="font-weight:600;color:var(--text)">WhatsApp</div>
+          <div>+221 77 000 00 00</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">📍</div>
+        <div>
+          <div style="font-weight:600;color:var(--text)">Localisation</div>
+          <div>Dakar, Sénégal — cours en ligne & présentiel</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">⏰</div>
+        <div>
+          <div style="font-weight:600;color:var(--text)">Disponibilité</div>
+          <div>Lun–Sam : 9h–20h</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div id="contact-form-wrap">
+        <h3>✉️ Envoyer un message</h3>
+        <div class="form-group">
+          <label>Ton prénom *</label>
+          <input type="text" id="f-name" placeholder="Ex: Oumar">
+        </div>
+        <div class="form-group">
+          <label>Ton email *</label>
+          <input type="email" id="f-email" placeholder="oumar@gmail.com">
+        </div>
+        <div class="form-group">
+          <label>Sujet</label>
+          <select id="f-sujet">
+            <option>Question sur une leçon</option>
+            <option>Inscription au cours</option>
+            <option>Problème technique</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ton message *</label>
+          <textarea id="f-msg" placeholder="Écris ta question ici..."></textarea>
+        </div>
+        <button class="form-submit" onclick="sendContact()">Envoyer le message 🚀</button>
+      </div>
+      <div class="form-success" id="form-success">
+        <div class="fs-icon">🎉</div>
+        <h4>Message envoyé !</h4>
+        <p>Merci ! Coach Mbengue te répondra dans les 24h. Continue à apprendre pendant ce temps !</p>
+        <br>
+        <button class="btn-nav btn-next" onclick="hideContact()" style="padding:10px 24px;">← Retour au cours</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   DONNÉES DES LEÇONS
+═══════════════════════════════════════════ */
+const lessons = [
+
+/* ── 0 ── Structure HTML */
+{
+  title:"Structure HTML de base",
+  subtitle:"La fondation de tout site web. Sans HTML solide, le CSS ne peut rien faire !",
+  num:"Leçon 1",
+  tags:["html","DOCTYPE","head","body","link"],
+  section:"🏗️ Les Fondations",
+  htmlCode:`<!DOCTYPE html>
+<html lang="fr">
+
+  <head>
+    <!-- Informations sur la page -->
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,
+                   initial-scale=1.0">
+    <title>Mon premier site</title>
+
+    <!-- Connexion au fichier CSS -->
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <!-- Tout le contenu visible ici -->
+    <h1>Bonjour le monde !</h1>
+    <p>Mon premier paragraphe CSS.</p>
+  </body>
+
+</html>`,
+  cssCode:`/* style.css */
+/* Ce fichier est encore vide.
+   On va le remplir ensemble ! */`,
+  htmlDisplay:`<span class="hc">&lt;!DOCTYPE html&gt;</span>
+<span class="ht">&lt;html</span> <span class="ha">lang</span>=<span class="hv">"fr"</span><span class="ht">&gt;</span>
+  <span class="ht">&lt;head&gt;</span>
+    <span class="hc">&lt;!-- Informations sur la page --&gt;</span>
+    <span class="ht">&lt;meta</span> <span class="ha">charset</span>=<span class="hv">"UTF-8"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;meta</span> <span class="ha">name</span>=<span class="hv">"viewport"</span> <span class="ha">content</span>=<span class="hv">"width=device-width"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;title&gt;</span>Mon premier site<span class="ht">&lt;/title&gt;</span>
+    <span class="hc">&lt;!-- Connexion au fichier CSS --&gt;</span>
+    <span class="ht">&lt;link</span> <span class="ha">rel</span>=<span class="hv">"stylesheet"</span> <span class="ha">href</span>=<span class="hv">"style.css"</span><span class="ht">&gt;</span>
+  <span class="ht">&lt;/head&gt;</span>
+  <span class="ht">&lt;body&gt;</span>
+    <span class="hc">&lt;!-- Tout le contenu visible ici --&gt;</span>
+    <span class="ht">&lt;h1&gt;</span>Bonjour le monde !<span class="ht">&lt;/h1&gt;</span>
+    <span class="ht">&lt;p&gt;</span>Mon premier paragraphe CSS.<span class="ht">&lt;/p&gt;</span>
+  <span class="ht">&lt;/body&gt;</span>
+<span class="ht">&lt;/html&gt;</span>`,
+  previewHTML:`<h1>Bonjour le monde !</h1><p>Mon premier paragraphe CSS.</p>`,
+  previewCSS:`body{font-family:Georgia,serif;padding:20px;}`,
+  metaphor:"Imagine que tu construis une maison. Le <strong>HTML est le squelette</strong> : les murs, le toit, les pièces. Le <strong>CSS est la décoration</strong> : la peinture, les meubles, les rideaux. Sans squelette, pas de décoration possible !",
+  props:[
+    {name:"<!DOCTYPE html>",desc:"Déclare au navigateur que c'est un fichier HTML5 moderne. Toujours la toute première ligne, sans exception !",ex:"<!DOCTYPE html>"},
+    {name:"<html lang='fr'>",desc:"Balise racine qui enveloppe tout. L'attribut lang='fr' indique la langue aux lecteurs d'écran et moteurs de recherche.",ex:'<html lang="fr">'},
+    {name:"<head>",desc:"Zone invisible qui contient les informations techniques. Ce que l'utilisateur ne voit pas mais qui est indispensable.",ex:"<head>\n  <title>Mon site</title>\n</head>"},
+    {name:"<meta charset='UTF-8'>",desc:"Permet d'afficher les accents : é, à, ç, ñ... Sans ça, tes accents s'affichent en caractères bizarres !",ex:'<meta charset="UTF-8">'},
+    {name:"<link rel='stylesheet'>",desc:"Connecte ton fichier CSS à ta page HTML. C'est le câble qui relie le squelette à la décoration !",ex:'<link rel="stylesheet" href="style.css">'},
+    {name:"<body>",desc:"Tout ce que l'utilisateur voit est dans le body : textes, images, boutons, formulaires...",ex:"<body>\n  <h1>Titre</h1>\n  <p>Texte</p>\n</body>"},
+  ],
+  recap:[
+    {prop:"DOCTYPE",val:"Toujours en 1er"},
+    {prop:"<html lang>",val:"Langue du site"},
+    {prop:"<head>",val:"Infos techniques"},
+    {prop:"<body>",val:"Contenu visible"},
+    {prop:"<link>",val:"Connecte CSS"},
+    {prop:"charset=UTF-8",val:"Active les accents"},
+  ],
+  schema:`Structure d'une page :
+┌─────────────────────────┐
+│  <!DOCTYPE html>         │
+│  <html>                  │
+│  ├── <head>              │ ← invisible
+│  │   ├── <meta charset>  │
+│  │   ├── <title>         │
+│  │   └── <link css>      │
+│  └── <body>              │ ← visible
+│      ├── <h1>            │
+│      └── <p>             │
+│  </html>                 │
+└─────────────────────────┘`,
+  tip:"✅ Règle d'or : ferme toujours tes balises ! <h1>...</h1>  <p>...</p>  <div>...</div>",
+  warn:"⚠️ Sans <link rel='stylesheet' href='style.css'>, ton CSS ne sera JAMAIS appliqué !",
+  badge:{icon:"🏗️",title:"Architecte HTML !",desc:"Tu connais la structure de base."},
+  xp:50
+},
+
+/* ── 1 ── Couleurs & Texte */
+{
+  title:"Couleurs & Typographie",
+  subtitle:"On donne vie au texte : couleurs, polices, tailles, alignement.",
+  num:"Leçon 2",
+  tags:["color","font-size","font-family","text-align","font-weight","line-height"],
+  section:"🏗️ Les Fondations",
+  htmlCode:`<body>
+  <h1>Mon site web</h1>
+  <h2>Sous-titre de la page</h2>
+  <p>Voici un paragraphe normal
+     avec du texte courant.</p>
+  <p class="special">
+    Ce texte est mis en valeur !
+  </p>
+</body>`,
+  cssCode:`body {
+  font-family: Georgia, serif;
+  font-size: 16px;
+  color: #333333;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  font-size: 36px;
+  color: #1a237e;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+h2 {
+  font-size: 22px;
+  color: #283593;
+  font-style: italic;
+}
+
+p {
+  line-height: 1.7;
+  color: #555555;
+}
+
+.special {
+  color: #c62828;
+  font-weight: bold;
+  font-size: 18px;
+}`,
+  htmlDisplay:`<span class="ht">&lt;body&gt;</span>
+  <span class="ht">&lt;h1&gt;</span>Mon site web<span class="ht">&lt;/h1&gt;</span>
+  <span class="ht">&lt;h2&gt;</span>Sous-titre de la page<span class="ht">&lt;/h2&gt;</span>
+  <span class="ht">&lt;p&gt;</span>Voici un paragraphe normal avec du texte courant.<span class="ht">&lt;/p&gt;</span>
+  <span class="ht">&lt;p</span> <span class="ha">class</span>=<span class="hv">"special"</span><span class="ht">&gt;</span>Ce texte est mis en valeur !<span class="ht">&lt;/p&gt;</span>
+<span class="ht">&lt;/body&gt;</span>`,
+  previewHTML:`<h1>Mon site web</h1><h2>Sous-titre de la page</h2><p>Voici un paragraphe normal avec du texte courant.</p><p class="special">Ce texte est mis en valeur !</p>`,
+  previewCSS:`body{font-family:Georgia,serif;font-size:16px;color:#333;background:#f9f9f9;padding:20px;}h1{font-size:36px;color:#1a237e;text-align:center;font-weight:bold;text-transform:uppercase;letter-spacing:3px;}h2{font-size:22px;color:#283593;font-style:italic;}p{line-height:1.7;color:#555;}.special{color:#c62828;font-weight:bold;font-size:18px;}`,
+  metaphor:"Le texte CSS c'est comme <strong>habiller du texte</strong>. La propriété <strong>color</strong> choisit la couleur de l'encre. <strong>font-size</strong> choisit la taille du crayon. <strong>font-family</strong> choisit le style d'écriture (Times New Roman, Arial...). <strong>font-weight</strong> choisit si tu appuies fort (gras) ou légèrement !",
+  props:[
+    {name:"color",desc:"Couleur du texte. Valeurs possibles : nom anglais (red, blue), code hexa (#FF0000), ou rgb(255,0,0).",ex:"color: #1a237e;\ncolor: tomato;\ncolor: rgb(26, 35, 126);"},
+    {name:"font-family",desc:"Police d'écriture. Donne toujours des polices de secours séparées par virgule, au cas où la première n'est pas disponible.",ex:"font-family: Georgia, 'Times New Roman', serif;\nfont-family: Arial, Helvetica, sans-serif;"},
+    {name:"font-size",desc:"Taille du texte en pixels. Taille par défaut = 16px. Un h1 classique fait 32px, un petit texte 12px.",ex:"font-size: 16px;  /* normal */\nfont-size: 36px;  /* grand h1 */\nfont-size: 12px;  /* petit */"},
+    {name:"font-weight",desc:"Épaisseur (graisse) du texte. bold = gras, normal = normal. Valeurs numériques de 100 (très fin) à 900 (très gras).",ex:"font-weight: bold;    /* gras */\nfont-weight: normal;  /* normal */\nfont-weight: 700;     /* = bold */"},
+    {name:"text-align",desc:"Alignement horizontal. left = gauche, center = centré, right = droite, justify = justifié (comme un journal).",ex:"text-align: center;\ntext-align: left;\ntext-align: justify;"},
+    {name:"line-height",desc:"Hauteur d'une ligne. 1.5 à 1.8 est idéal pour la lisibilité. C'est l'interligne.",ex:"line-height: 1.7;    /* recommandé */\nline-height: 24px;   /* en pixels */"},
+    {name:"text-transform",desc:"Change la casse du texte sans modifier le HTML.",ex:"text-transform: uppercase;  /* MAJUSCULES */\ntext-transform: lowercase;  /* minuscules */\ntext-transform: capitalize; /* Première Lettre */"},
+    {name:"letter-spacing",desc:"Espace entre les lettres. Très utilisé sur les titres en majuscules pour aérer.",ex:"letter-spacing: 3px;\nletter-spacing: -1px; /* serré */"},
+  ],
+  recap:[
+    {prop:"color",val:"Couleur texte"},
+    {prop:"font-family",val:"Police d'écriture"},
+    {prop:"font-size",val:"Taille (px)"},
+    {prop:"font-weight",val:"Gras/normal"},
+    {prop:"text-align",val:"Alignement"},
+    {prop:"line-height",val:"Interligne"},
+    {prop:"text-transform",val:"Maj/min"},
+    {prop:"letter-spacing",val:"Espace lettres"},
+  ],
+  schema:`Couleurs CSS — 3 façons d'écrire la même couleur :
+  
+  Nom anglais  → color: tomato;
+  Hexadécimal  → color: #FF6347;
+  RGB          → color: rgb(255, 99, 71);
+
+Niveaux de gris pratiques :
+  Noir pur      → #000000
+  Texte foncé   → #333333
+  Texte moyen   → #666666
+  Texte clair   → #999999
+  Blanc pur     → #FFFFFF`,
+  tip:"✅ Pour les polices web gratuites, utilise Google Fonts : fonts.google.com — copie le lien dans ton <head>.",
+  warn:"⚠️ Attention à font-family : mets toujours plusieurs polices en secours. Si la première n'existe pas sur l'ordinateur, le navigateur prend la suivante.",
+  badge:{icon:"🎨",title:"Artiste du texte !",desc:"Tu maîtrises couleurs et typographie."},
+  xp:80
+},
+
+/* ── 2 ── Box Model */
+{
+  title:"Le Box Model — Marges & Espacements",
+  subtitle:"LE concept le plus important du CSS. Tout élément est une boîte avec 4 couches.",
+  num:"Leçon 3",
+  tags:["margin","padding","width","height","box-sizing","border-box"],
+  section:"🏗️ Les Fondations",
+  htmlCode:`<body>
+
+  <div class="boite-simple">
+    <p>Je suis dans une boîte.</p>
+  </div>
+
+  <div class="boite-espacee">
+    <p>Boîte avec padding et margin.</p>
+  </div>
+
+  <div class="boite-centree">
+    <p>Boîte centrée avec margin auto.</p>
+  </div>
+
+</body>`,
+  cssCode:`body {
+  font-family: Arial, sans-serif;
+  background-color: #eceff1;
+}
+
+/* Boîte simple */
+.boite-simple {
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 30px;
+}
+
+/* Boîte avec marges précises */
+.boite-espacee {
+  background-color: #e3f2fd;
+  padding: 15px 30px;  /* haut/bas  gauche/droite */
+  margin-top: 0;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  margin-right: 30px;
+  width: 400px;
+}
+
+/* Boîte centrée */
+.boite-centree {
+  background-color: #f3e5f5;
+  width: 300px;
+  padding: 20px;
+  margin: 20px auto;  /* auto = centré ! */
+}`,
+  htmlDisplay:`<span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"boite-simple"</span><span class="ht">&gt;</span>
+  <span class="ht">&lt;p&gt;</span>Je suis dans une boîte.<span class="ht">&lt;/p&gt;</span>
+<span class="ht">&lt;/div&gt;</span>
+
+<span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"boite-espacee"</span><span class="ht">&gt;</span>
+  <span class="ht">&lt;p&gt;</span>Boîte avec padding et margin.<span class="ht">&lt;/p&gt;</span>
+<span class="ht">&lt;/div&gt;</span>
+
+<span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"boite-centree"</span><span class="ht">&gt;</span>
+  <span class="ht">&lt;p&gt;</span>Boîte centrée avec margin auto.<span class="ht">&lt;/p&gt;</span>
+<span class="ht">&lt;/div&gt;</span>`,
+  previewHTML:`<div class="boite-simple"><p>Je suis dans une boîte.</p></div><div class="boite-espacee"><p>Boîte avec padding et margin.</p></div><div class="boite-centree"><p>Boîte centrée avec margin auto.</p></div>`,
+  previewCSS:`body{font-family:Arial,sans-serif;background:#eceff1;}.boite-simple{background:#fff;padding:20px;margin:30px;}.boite-espacee{background:#e3f2fd;padding:15px 30px;margin:0 30px 20px;width:400px;}.boite-centree{background:#f3e5f5;width:300px;padding:20px;margin:20px auto;}`,
+  metaphor:"Imagine un <strong>colis Amazon</strong> : le <strong>contenu</strong> c'est le produit. Le <strong>padding</strong> c'est le papier bulle qui protège à l'intérieur. La <strong>border</strong> c'est la boîte en carton. La <strong>margin</strong> c'est l'espace entre les boîtes sur le tapis roulant. Chaque élément HTML est un colis !",
+  props:[
+    {name:"padding",desc:"Espace INTÉRIEUR entre le contenu et la bordure. Augmente la taille visible de l'élément.",ex:"padding: 20px;           /* 4 côtés égaux */\npadding: 10px 20px;      /* haut/bas  gauche/droite */\npadding: 10px 20px 15px 5px; /* haut droite bas gauche */\npadding-top: 10px;       /* un seul côté */"},
+    {name:"margin",desc:"Espace EXTÉRIEUR autour de l'élément. Crée de la distance entre les éléments voisins.",ex:"margin: 20px;           /* 4 côtés */\nmargin: 10px auto;      /* centrage horizontal */\nmargin-bottom: 30px;    /* un seul côté */\nmargin: 0;              /* supprime les marges */"},
+    {name:"width / height",desc:"Largeur et hauteur de l'élément. Par défaut, un block prend 100% de la largeur parent.",ex:"width: 400px;   /* largeur fixe */\nwidth: 80%;     /* % du parent */\nheight: 200px;  /* hauteur fixe */\nmax-width: 900px; /* largeur max */"},
+    {name:"box-sizing: border-box",desc:"TRÈS IMPORTANT. Avec cette valeur, le padding et la border sont inclus dans la width. Sans ça, ils s'AJOUTENT et débordent !",ex:"/* Sans box-sizing : width 300px + padding 20px = 340px total */\n/* Avec border-box : width 300px tout compris */\n* { box-sizing: border-box; }"},
+    {name:"margin: auto",desc:"Astuce classique pour centrer un bloc. L'élément doit obligatoirement avoir une largeur (width) définie !",ex:".boite {\n  width: 600px;\n  margin: 0 auto; /* centré ! */\n}"},
+  ],
+  recap:[
+    {prop:"padding",val:"Espace intérieur"},
+    {prop:"margin",val:"Espace extérieur"},
+    {prop:"width",val:"Largeur"},
+    {prop:"height",val:"Hauteur"},
+    {prop:"margin: auto",val:"Centrage horiz."},
+    {prop:"box-sizing",val:"Mode calcul taille"},
+  ],
+  schema:`Le Box Model — de l'intérieur vers l'extérieur :
+
+┌─────────────────────────────────┐  ← margin (espace ext.)
+│  ┌───────────────────────────┐  │
+│  │  ┌─────────────────────┐  │  │  ← border
+│  │  │  ┌───────────────┐  │  │  │
+│  │  │  │   CONTENU     │  │  │  │  ← padding (espace int.)
+│  │  │  └───────────────┘  │  │  │
+│  │  └─────────────────────┘  │  │
+│  └───────────────────────────┘  │
+└─────────────────────────────────┘
+
+Raccourci : padding: 10px 20px 15px 5px
+            = haut | droite | bas | gauche (sens horaire)`,
+  tip:"✅ Colle tout en haut de ton CSS : * { box-sizing: border-box; margin: 0; padding: 0; } — ça évite 90% des problèmes d'espacement !",
+  warn:"⚠️ margin: auto ne fonctionne QUE si l'élément a une width définie. Sans width, ça ne fait rien.",
+  badge:{icon:"📦",title:"Maître des boîtes !",desc:"Tu comprends le Box Model."},
+  xp:100
+},
+
+/* ── 3 ── Bordures & Fond */
+{
+  title:"Bordures & Arrière-plans",
+  subtitle:"Bordures, coins arrondis, ombres portées. On commence à vraiment décorer !",
+  num:"Leçon 4",
+  tags:["border","border-radius","background-color","box-shadow","opacity"],
+  section:"🏗️ Les Fondations",
+  htmlCode:`<body>
+
+  <div class="carte">
+    <h3>Carte simple</h3>
+    <p>Avec bordure et coins arrondis.</p>
+  </div>
+
+  <div class="carte-relief">
+    <h3>Carte avec ombre</h3>
+    <p>L'ombre donne du relief visuel.</p>
+  </div>
+
+  <a href="#" class="bouton-style">
+    Je suis un bouton stylisé
+  </a>
+
+</body>`,
+  cssCode:`body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f4f8;
+  padding: 20px;
+}
+
+/* Carte simple */
+.carte {
+  width: 300px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 2px solid #90caf9;
+  border-radius: 10px;
+}
+
+/* Carte avec ombre portée */
+.carte-relief {
+  width: 300px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #fff9c4;
+  border-radius: 12px;
+  border-left: 5px solid #f9a825;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.12);
+}
+
+/* Bouton stylisé */
+.bouton-style {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: #1565c0;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(21,101,192,0.4);
+}`,
+  htmlDisplay:`<span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"carte"</span><span class="ht">&gt;</span>
+  <span class="ht">&lt;h3&gt;</span>Carte simple<span class="ht">&lt;/h3&gt;</span>
+  <span class="ht">&lt;p&gt;</span>Avec bordure et coins arrondis.<span class="ht">&lt;/p&gt;</span>
+<span class="ht">&lt;/div&gt;</span>
+
+<span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"carte-relief"</span><span class="ht">&gt;</span>
+  <span class="ht">&lt;h3&gt;</span>Carte avec ombre<span class="ht">&lt;/h3&gt;</span>
+  <span class="ht">&lt;p&gt;</span>L'ombre donne du relief visuel.<span class="ht">&lt;/p&gt;</span>
+<span class="ht">&lt;/div&gt;</span>
+
+<span class="ht">&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span> <span class="ha">class</span>=<span class="hv">"bouton-style"</span><span class="ht">&gt;</span>
+  Je suis un bouton stylisé
+<span class="ht">&lt;/a&gt;</span>`,
+  previewHTML:`<div class="carte"><h3>Carte simple</h3><p>Avec bordure et coins arrondis.</p></div><div class="carte-relief"><h3>Carte avec ombre</h3><p>L'ombre donne du relief visuel.</p></div><a href="#" class="bouton-style">Je suis un bouton stylisé</a>`,
+  previewCSS:`body{font-family:Arial,sans-serif;background:#f0f4f8;padding:20px;}.carte{width:300px;padding:20px;margin-bottom:20px;background:#fff;border:2px solid #90caf9;border-radius:10px;}.carte-relief{width:300px;padding:20px;margin-bottom:20px;background:#fff9c4;border-radius:12px;border-left:5px solid #f9a825;box-shadow:0 4px 15px rgba(0,0,0,0.12);}.bouton-style{display:inline-block;padding:12px 28px;background:#1565c0;color:white;text-decoration:none;border-radius:6px;border:none;font-size:15px;cursor:pointer;box-shadow:0 2px 8px rgba(21,101,192,0.4);}`,
+  metaphor:"La <strong>bordure (border)</strong> c'est comme le cadre d'un tableau. Le <strong>border-radius</strong> c'est comme les coins d'une carte bancaire — plus le chiffre est grand, plus c'est arrondi. Le <strong>box-shadow</strong> c'est comme l'ombre d'un objet posé sur une table : il donne du relief et de la profondeur !",
+  props:[
+    {name:"border",desc:"Raccourci pour définir épaisseur + style + couleur en une ligne.",ex:"border: 2px solid #90caf9;\nborder: 1px dashed red;\nborder: 3px dotted green;\nborder: none; /* supprime la bordure */"},
+    {name:"border-radius",desc:"Arrondit les coins. 50% sur un élément carré = cercle parfait.",ex:"border-radius: 10px;  /* tous les coins */\nborder-radius: 50%;   /* cercle parfait */\nborder-top-left-radius: 20px; /* un coin */"},
+    {name:"border-left / right / top / bottom",desc:"Bordure sur un seul côté. Très utilisé pour les effets décoratifs ou les cartes avec accent de couleur.",ex:"border-left: 5px solid orange;\nborder-bottom: 2px solid #333;"},
+    {name:"box-shadow",desc:"Ombre portée. Paramètres : décalage-x | décalage-y | flou | couleur. rgba() pour couleur semi-transparente.",ex:"/* x    y    flou  couleur */\nbox-shadow: 0px 4px 15px rgba(0,0,0,0.12);\n/* ombre à droite et en bas, très floue, noire à 12% */"},
+    {name:"background-color",desc:"Couleur de fond de l'élément. transparent = aucun fond.",ex:"background-color: #ffffff;    /* blanc */\nbackground-color: transparent; /* aucun fond */\nbackground-color: rgba(255,255,255,0.9); /* blanc 90% opaque */"},
+  ],
+  recap:[
+    {prop:"border",val:"épaiss. style couleur"},
+    {prop:"border-radius",val:"Arrondi coins"},
+    {prop:"border-left",val:"Un seul côté"},
+    {prop:"box-shadow",val:"x y flou couleur"},
+    {prop:"background-color",val:"Couleur de fond"},
+    {prop:"opacity",val:"0=invisible, 1=visible"},
+  ],
+  schema:`border: 2px solid #90caf9;
+         ↑     ↑      ↑
+      épaisseur style  couleur
+
+Styles de bordure : solid | dashed | dotted | double
+
+box-shadow: 0px  4px   15px  rgba(0,0,0,0.12)
+             ↑    ↑     ↑      ↑
+         décal-x décal-y flou  couleur+opacité`,
+  tip:"✅ rgba(0,0,0,0.12) = noir à 12% d'opacité. Parfait pour les ombres naturelles. Plus le 4e chiffre est grand (max 1), plus l'ombre est foncée.",
+  warn:"⚠️ cursor:pointer doit être mis sur les éléments cliquables qui ne sont pas des liens ou boutons natifs, sinon l'utilisateur ne sait pas qu'il peut cliquer !",
+  badge:{icon:"🖼️",title:"Décorateur CSS !",desc:"Bordures et ombres maîtrisées."},
+  xp:80
+},
+
+/* ── 4 ── Navbar */
+{
+  title:"Barre de Navigation (sans Flexbox)",
+  subtitle:"Logo à gauche, liens à droite. La technique classique avec float — indispensable à connaître !",
+  num:"Leçon 5",
+  tags:["float","overflow:hidden","display:inline-block","list-style:none","line-height"],
+  section:"🏠 Mise en page",
+  htmlCode:`<nav class="navbar">
+
+  <!-- Logo à gauche -->
+  <div id="logo">MonSite</div>
+
+  <!-- Liens de navigation à droite -->
+  <ul id="nav-liens">
+    <li><a href="#">Accueil</a></li>
+    <li><a href="#">À propos</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+
+</nav>`,
+  cssCode:`/* La barre de navigation */
+.navbar {
+  background-color: #1a237e;
+  padding: 0 30px;
+  height: 65px;
+
+  /* INDISPENSABLE avec float !
+     Empêche la navbar de s'effondrer */
+  overflow: hidden;
+}
+
+/* Logo — flotte à gauche */
+#logo {
+  float: left;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: bold;
+  /* Centrage vertical : line-height = hauteur navbar */
+  line-height: 65px;
+}
+
+/* Liste des liens — flotte à droite */
+#nav-liens {
+  float: right;
+  list-style: none;    /* enlève les puces */
+  padding: 0;
+  margin: 0;
+  line-height: 65px;   /* centrage vertical */
+}
+
+/* Chaque élément de liste côte à côte */
+#nav-liens li {
+  display: inline-block;
+}
+
+/* Style des liens */
+#nav-liens a {
+  color: #b3c5ff;
+  text-decoration: none;
+  padding: 0 15px;
+  font-size: 15px;
+}`,
+  htmlDisplay:`<span class="ht">&lt;nav</span> <span class="ha">class</span>=<span class="hv">"navbar"</span><span class="ht">&gt;</span>
+  <span class="hc">&lt;!-- Logo à gauche --&gt;</span>
+  <span class="ht">&lt;div</span> <span class="ha">id</span>=<span class="hv">"logo"</span><span class="ht">&gt;</span>MonSite<span class="ht">&lt;/div&gt;</span>
+  <span class="hc">&lt;!-- Liens de navigation à droite --&gt;</span>
+  <span class="ht">&lt;ul</span> <span class="ha">id</span>=<span class="hv">"nav-liens"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;li&gt;&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span><span class="ht">&gt;</span>Accueil<span class="ht">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="ht">&lt;li&gt;&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span><span class="ht">&gt;</span>À propos<span class="ht">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="ht">&lt;li&gt;&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span><span class="ht">&gt;</span>Services<span class="ht">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="ht">&lt;li&gt;&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span><span class="ht">&gt;</span>Contact<span class="ht">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="ht">&lt;/ul&gt;</span>
+<span class="ht">&lt;/nav&gt;</span>`,
+  previewHTML:`<nav class="navbar"><div id="logo">MonSite</div><ul id="nav-liens"><li><a href="#">Accueil</a></li><li><a href="#">À propos</a></li><li><a href="#">Services</a></li><li><a href="#">Contact</a></li></ul></nav>`,
+  previewCSS:`.navbar{background:#1a237e;padding:0 30px;height:65px;overflow:hidden;}#logo{float:left;color:#fff;font-size:22px;font-weight:bold;line-height:65px;}#nav-liens{float:right;list-style:none;padding:0;margin:0;line-height:65px;}#nav-liens li{display:inline-block;}#nav-liens a{color:#b3c5ff;text-decoration:none;padding:0 15px;font-size:15px;}`,
+  metaphor:"Float c'est comme des <strong>bateaux sur l'eau</strong> : quand tu dis float:left, l'élément se colle à gauche et les autres se placent autour. Imagine le logo comme un bateau qui s'amarre à gauche, et les liens comme un autre bateau à droite. Sans overflow:hidden sur le port (navbar), les bateaux débordent et le port s'effondre !",
+  props:[
+    {name:"float: left / right",desc:"Fait 'flotter' l'élément à gauche ou à droite. Les éléments suivants se placent autour. Technique classique avant Flexbox.",ex:"float: left;   /* colle à gauche */\nfloat: right;  /* colle à droite */"},
+    {name:"overflow: hidden",desc:"Sur le parent d'éléments flottants : empêche le conteneur de s'effondrer à hauteur 0. OBLIGATOIRE avec float !",ex:".navbar {\n  overflow: hidden; /* indispensable ! */\n}"},
+    {name:"list-style: none",desc:"Supprime les puces (•) et numéros d'une liste. Toujours mettre aussi padding:0 et margin:0 pour supprimer les espacements par défaut.",ex:"ul {\n  list-style: none;\n  padding: 0;\n  margin: 0;\n}"},
+    {name:"display: inline-block",desc:"Transforme des éléments block (qui prennent toute la ligne) en éléments côte à côte, tout en conservant marges et paddings.",ex:"li { display: inline-block; }\n/* Les <li> se mettent maintenant côte à côte */"},
+    {name:"line-height: 65px",desc:"Astuce de centrage vertical classique. Si la hauteur de ligne = hauteur du conteneur, le texte est parfaitement centré verticalement.",ex:".navbar { height: 65px; }\n#logo { line-height: 65px; } /* centré ! */"},
+    {name:"text-decoration: none",desc:"Supprime le soulignement des liens. Presque toujours utilisé dans les navigations.",ex:"a { text-decoration: none; }"},
+  ],
+  recap:[
+    {prop:"float: left",val:"Logo → gauche"},
+    {prop:"float: right",val:"Liens → droite"},
+    {prop:"overflow: hidden",val:"Empêche effondrement"},
+    {prop:"list-style: none",val:"Supprime puces"},
+    {prop:"display: inline-block",val:"Côte à côte"},
+    {prop:"line-height = height",val:"Centrage vertical"},
+  ],
+  schema:`Pattern Navbar Classique (sans Flexbox) :
+
+.navbar { overflow: hidden; }  ← PARENT
+   │
+   ├── #logo    { float: left;  line-height: 65px; }
+   └── #nav     { float: right; }
+          └── li { display: inline-block; }
+                  └── a { color:... text-decoration:none; }
+
+Règle des 3 :
+  float:left + float:right + overflow:hidden = NAVBAR ✓`,
+  tip:"✅ Le centrage vertical avec line-height marche SEULEMENT pour le texte sur une seule ligne. Pour plusieurs lignes, utilise padding-top à la place.",
+  warn:"⚠️ ATTENTION : sans overflow:hidden sur .navbar, la hauteur sera 0 (effondrement). C'est la cause #1 de bugs avec float !",
+  badge:{icon:"🧭",title:"Navigateur Expert !",desc:"Tu crées des navbars sans Flexbox."},
+  xp:120
+},
+
+/* ── 5 ── Hero Section */
+{
+  title:"Section Hero avec Image de Fond",
+  subtitle:"La grande section d'accroche avec image en arrière-plan, titre, texte et bouton superposés.",
+  num:"Leçon 6",
+  tags:["background-image","background-size:cover","position:relative","position:absolute","::before"],
+  section:"🏠 Mise en page",
+  htmlCode:`<section class="hero">
+
+  <!-- Contenu placé sur l'image -->
+  <div class="hero-contenu">
+    <h1>Bienvenue sur MonSite</h1>
+    <p>Nous créons des expériences
+       web modernes et mémorables.</p>
+    <a href="#" class="btn-hero">
+      Découvrir nos services
+    </a>
+  </div>
+
+</section>`,
+  cssCode:`/* Section Hero principale */
+.hero {
+  height: 400px;
+
+  /* L'image de fond */
+  background-image: url('https://picsum.photos/1200/400?random=20');
+  background-size: cover;       /* couvre TOUT */
+  background-position: center;  /* centre l'image */
+  background-repeat: no-repeat; /* pas de répétition */
+
+  /* Nécessaire pour le voile */
+  position: relative;
+}
+
+/* Voile sombre sur l'image */
+.hero::before {
+  content: '';           /* obligatoire */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Contenu au-dessus du voile */
+.hero-contenu {
+  position: relative;   /* passe au-dessus du voile */
+  text-align: center;
+  padding-top: 100px;
+  color: white;
+}
+
+.hero-contenu h1 {
+  font-size: 42px;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.hero-contenu p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+/* Bouton d'appel à l'action */
+.btn-hero {
+  display: inline-block;
+  padding: 14px 38px;
+  background-color: #ff6f00;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}`,
+  htmlDisplay:`<span class="ht">&lt;section</span> <span class="ha">class</span>=<span class="hv">"hero"</span><span class="ht">&gt;</span>
+  <span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"hero-contenu"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;h1&gt;</span>Bienvenue sur MonSite<span class="ht">&lt;/h1&gt;</span>
+    <span class="ht">&lt;p&gt;</span>Nous créons des expériences web modernes.<span class="ht">&lt;/p&gt;</span>
+    <span class="ht">&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span> <span class="ha">class</span>=<span class="hv">"btn-hero"</span><span class="ht">&gt;</span>
+      Découvrir nos services
+    <span class="ht">&lt;/a&gt;</span>
+  <span class="ht">&lt;/div&gt;</span>
+<span class="ht">&lt;/section&gt;</span>`,
+  previewHTML:`<section class="hero"><div class="hero-contenu"><h1>Bienvenue sur MonSite</h1><p>Nous créons des expériences web modernes et mémorables.</p><a href="#" class="btn-hero">Découvrir nos services</a></div></section>`,
+  previewCSS:`.hero{height:400px;background-image:url('https://picsum.photos/1200/400?random=20');background-size:cover;background-position:center;background-repeat:no-repeat;position:relative;}.hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);}.hero-contenu{position:relative;text-align:center;padding-top:100px;color:white;}.hero-contenu h1{font-size:42px;margin-bottom:15px;text-shadow:0 2px 10px rgba(0,0,0,0.5);}.hero-contenu p{font-size:18px;margin-bottom:30px;opacity:0.9;}.btn-hero{display:inline-block;padding:14px 38px;background:#ff6f00;color:white;text-decoration:none;font-weight:bold;border-radius:5px;}`,
+  metaphor:"Imagine une <strong>affiche de cinéma</strong> : l'image de fond c'est la photo du film. Le voile sombre (::before) c'est le filtre pour que le texte blanc soit lisible. Le texte et le bouton c'est le titre du film et la date de sortie, placés par-dessus. Sans le voile, le texte blanc serait illisible sur l'image !",
+  props:[
+    {name:"background-image",desc:"Met une image en arrière-plan. Fournir l'URL entre url(' ').",ex:"background-image: url('photo.jpg');\nbackground-image: url('https://...');"},
+    {name:"background-size: cover",desc:"L'image couvre TOUT l'espace disponible, sans espace blanc, sans déformation. C'est la valeur clé pour les sections hero.",ex:"background-size: cover;    /* couvre tout */\nbackground-size: contain;  /* tout visible */"},
+    {name:"background-position: center",desc:"Centre l'image. Utile quand l'image est rognée par background-size:cover.",ex:"background-position: center;\nbackground-position: top center;\nbackground-position: 50% 30%;"},
+    {name:"position: relative",desc:"L'élément reste à sa place dans la page MAIS permet de positionner des éléments enfants en absolu par rapport à lui.",ex:".parent {\n  position: relative;\n}"},
+    {name:"position: absolute",desc:"Sorti du flux normal. Positionné par rapport au premier parent en position:relative. Utilisé ici pour le voile et le ::before.",ex:".voile {\n  position: absolute;\n  top: 0; left: 0;\n  width: 100%; height: 100%;\n}"},
+    {name:"::before (pseudo-élément)",desc:"Crée un élément virtuel AVANT le contenu, sans toucher au HTML. Très utilisé pour les voiles, décorations, effets.",ex:".hero::before {\n  content: ''; /* obligatoire même si vide ! */\n  position: absolute;\n  background: rgba(0,0,0,0.4);\n}"},
+  ],
+  recap:[
+    {prop:"background-image",val:"url('...')"},
+    {prop:"background-size",val:"cover"},
+    {prop:"background-position",val:"center"},
+    {prop:"position: relative",val:"Référence enfants"},
+    {prop:"position: absolute",val:"Hors du flux"},
+    {prop:"::before",val:"Élément virtuel"},
+  ],
+  schema:`Superposition des couches dans le hero :
+
+Couche 3 : .hero-contenu  (position:relative → au-dessus)
+             ↑
+Couche 2 : .hero::before  (position:absolute → voile noir)
+             ↑
+Couche 1 : .hero           (background-image → l'image)
+
+Important : position:relative sur .hero + position:relative
+sur .hero-contenu = le contenu passe AU-DESSUS du voile`,
+  tip:"✅ text-shadow: 0 2px 10px rgba(0,0,0,0.5) est indispensable pour rendre le texte lisible sur une image. Toujours l'ajouter aux titres de hero !",
+  warn:"⚠️ N'oublie JAMAIS content:'' dans ::before / ::after — sans ça, le pseudo-élément n'apparaît pas du tout !",
+  badge:{icon:"🦸",title:"Créateur de Hero !",desc:"Tu maîtrises les sections d'accroche."},
+  xp:130
+},
+
+/* ── 6 ── Colonnes */
+{
+  title:"Colonnes avec Float",
+  subtitle:"Créer 2 ou 3 colonnes côte à côte sans Flexbox. La technique des pourcentages + float.",
+  num:"Leçon 7",
+  tags:["float:left","width:%","box-sizing:border-box","overflow:hidden","clearfix"],
+  section:"🏠 Mise en page",
+  htmlCode:`<section class="services">
+  <h2>Nos Services</h2>
+
+  <!-- Rangée de 3 colonnes -->
+  <div class="rangee">
+
+    <div class="col">
+      <h3>🎨 Design</h3>
+      <p>Interfaces modernes
+         et intuitives.</p>
+    </div>
+
+    <div class="col">
+      <h3>⚙️ Développement</h3>
+      <p>Code propre, rapide
+         et maintenable.</p>
+    </div>
+
+    <div class="col">
+      <h3>📈 Marketing</h3>
+      <p>Stratégies digitales
+         pour grandir.</p>
+    </div>
+
+  </div><!-- fin .rangee -->
+</section>`,
+  cssCode:`/* Reset indispensable */
+* { box-sizing: border-box; }
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+}
+
+/* Section wrapper */
+.services {
+  padding: 40px 20px;
+}
+
+.services h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #1a237e;
+}
+
+/* Conteneur des colonnes */
+.rangee {
+  max-width: 900px;
+  margin: 0 auto;
+  /* Empêche l'effondrement des floats */
+  overflow: hidden;
+}
+
+/* Chaque colonne */
+.col {
+  /* 3 colonnes = 100% / 3 = 33.33% */
+  width: 33.33%;
+  float: left;
+  /* Espacement intérieur */
+  padding: 25px 20px;
+  /* box-sizing: border-box fait que
+     le padding est INCLUS dans 33.33% */
+  text-align: center;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+}
+
+.col h3 { color: #283593; margin-bottom: 10px; }
+.col p  { color: #666; line-height: 1.6; }`,
+  htmlDisplay:`<span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"rangee"</span><span class="ht">&gt;</span>
+  <span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"col"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;h3&gt;</span>🎨 Design<span class="ht">&lt;/h3&gt;</span>
+    <span class="ht">&lt;p&gt;</span>Interfaces modernes.<span class="ht">&lt;/p&gt;</span>
+  <span class="ht">&lt;/div&gt;</span>
+  <span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"col"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;h3&gt;</span>⚙️ Développement<span class="ht">&lt;/h3&gt;</span>
+    <span class="ht">&lt;p&gt;</span>Code propre.<span class="ht">&lt;/p&gt;</span>
+  <span class="ht">&lt;/div&gt;</span>
+  <span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"col"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;h3&gt;</span>📈 Marketing<span class="ht">&lt;/h3&gt;</span>
+    <span class="ht">&lt;p&gt;</span>Stratégies digitales.<span class="ht">&lt;/p&gt;</span>
+  <span class="ht">&lt;/div&gt;</span>
+<span class="ht">&lt;/div&gt;</span>`,
+  previewHTML:`<section class="services"><h2>Nos Services</h2><div class="rangee"><div class="col"><h3>🎨 Design</h3><p>Interfaces modernes et intuitives.</p></div><div class="col"><h3>⚙️ Développement</h3><p>Code propre, rapide et maintenable.</p></div><div class="col"><h3>📈 Marketing</h3><p>Stratégies digitales pour grandir.</p></div></div></section>`,
+  previewCSS:`*{box-sizing:border-box;}body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0;}.services{padding:40px 20px;}.services h2{text-align:center;margin-bottom:30px;color:#1a237e;}.rangee{max-width:900px;margin:0 auto;overflow:hidden;}.col{width:33.33%;float:left;padding:25px 20px;text-align:center;background:white;border:1px solid #e0e0e0;}.col h3{color:#283593;margin-bottom:10px;}.col p{color:#666;line-height:1.6;}`,
+  metaphor:"Imagine que tu partages une <strong>pizza en parts égales</strong>. Pour 3 personnes, chaque part fait 33.33% de la pizza. Pour 2 personnes, 50% chacun. Pour 4 personnes, 25% chacun. En CSS c'est pareil : tu divises 100% par le nombre de colonnes. <strong>box-sizing:border-box</strong> fait que la garniture (padding) est incluse dans la part, pas en plus !",
+  props:[
+    {name:"width: 33.33%",desc:"Pourcentage de la largeur du parent. Pour 3 colonnes = 100/3 = 33.33%. Pour 2 colonnes = 50%. Pour 4 = 25%.",ex:"/* 2 colonnes */  .col { width: 50%; }\n/* 3 colonnes */  .col { width: 33.33%; }\n/* 4 colonnes */  .col { width: 25%; }"},
+    {name:"float: left",desc:"Toutes les colonnes flottent à gauche : elles se positionnent naturellement côte à côte.",ex:".col {\n  float: left;\n  width: 33.33%;\n}"},
+    {name:"box-sizing: border-box",desc:"CRUCIAL ! Sans ça, le padding s'ajoute à la width. 33.33% + 20px padding = débordement. Avec border-box, le padding EST dans le 33.33%.",ex:"/* Toujours mettre en haut de ton CSS ! */\n* { box-sizing: border-box; }"},
+    {name:"overflow: hidden (clearfix)",desc:"Sur le conteneur parent (.rangee), empêche que la hauteur soit 0 quand tous les enfants flottent.",ex:".rangee {\n  overflow: hidden; /* clearfix */\n}"},
+    {name:"max-width + margin: auto",desc:"Limite la largeur max du conteneur et le centre dans la page. Indispensable pour éviter que le site soit trop large sur grand écran.",ex:".rangee {\n  max-width: 900px;\n  margin: 0 auto;\n}"},
+  ],
+  recap:[
+    {prop:"width: 33.33%",val:"3 colonnes égales"},
+    {prop:"float: left",val:"Côte à côte"},
+    {prop:"box-sizing",val:"border-box = inclut padding"},
+    {prop:"overflow: hidden",val:"Clearfix parent"},
+    {prop:"max-width",val:"Limite largeur"},
+    {prop:"margin: 0 auto",val:"Centrage horizontal"},
+  ],
+  schema:`Calcul des largeurs de colonnes :
+
+2 colonnes → 100% ÷ 2 = 50%
+3 colonnes → 100% ÷ 3 = 33.33%
+4 colonnes → 100% ÷ 4 = 25%
+
+Sans box-sizing:border-box :
+  width: 33.33% + padding: 20px = DÉBORDEMENT ❌
+
+Avec box-sizing:border-box :
+  width: 33.33% (padding INCLUS) = PARFAIT ✓`,
+  tip:"✅ Mets * { box-sizing: border-box; } tout en haut de ton CSS dans CHAQUE projet. C'est une convention universelle adoptée par tous les développeurs.",
+  warn:"⚠️ Si les colonnes ne sont pas côte à côte, vérifie : (1) que box-sizing:border-box est actif, (2) que la somme des widths ne dépasse pas 100%.",
+  badge:{icon:"🏛️",title:"Architecte de colonnes !",desc:"Tu crées des mises en page multi-colonnes."},
+  xp:140
+},
+
+/* ── 7 ── Footer */
+{
+  title:"Pied de Page (Footer)",
+  subtitle:"Un footer professionnel avec colonnes d'informations et barre de copyright.",
+  num:"Leçon 8",
+  tags:["footer","float","border-top","padding","color:#hex"],
+  section:"🏠 Mise en page",
+  htmlCode:`<footer class="footer">
+
+  <!-- Colonnes du footer -->
+  <div class="footer-inner">
+
+    <div class="f-col">
+      <h4>MonSite</h4>
+      <p>Votre partenaire web
+         depuis 2020.</p>
+    </div>
+
+    <div class="f-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#">Accueil</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="f-col">
+      <h4>Contact</h4>
+      <p>contact@monsite.sn</p>
+      <p>+221 77 000 00 00</p>
+    </div>
+
+  </div>
+
+  <!-- Barre copyright -->
+  <div class="footer-bas">
+    <p>© 2024 MonSite — Tous droits réservés</p>
+  </div>
+
+</footer>`,
+  cssCode:`* { box-sizing: border-box; }
+
+/* Le footer */
+.footer {
+  background-color: #111827;
+  color: #9ca3af;
+  font-family: Arial, sans-serif;
+}
+
+/* Conteneur des colonnes */
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px 20px;
+  overflow: hidden;  /* clearfix */
+}
+
+/* Chaque colonne du footer */
+.f-col {
+  float: left;
+  width: 33.33%;
+  padding-right: 30px;
+}
+
+.f-col h4 {
+  color: #ffffff;
+  font-size: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #374151;
+}
+
+.f-col ul {
+  list-style: none;
+  padding: 0;
+}
+
+.f-col ul li { margin-bottom: 8px; }
+
+.f-col a {
+  color: #9ca3af;
+  text-decoration: none;
+}
+
+.f-col p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Barre du bas */
+.footer-bas {
+  text-align: center;
+  padding: 15px 20px;
+  border-top: 1px solid #374151;
+  font-size: 13px;
+  color: #6b7280;
+}`,
+  htmlDisplay:`<span class="ht">&lt;footer</span> <span class="ha">class</span>=<span class="hv">"footer"</span><span class="ht">&gt;</span>
+  <span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"footer-inner"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"f-col"</span><span class="ht">&gt;</span>
+      <span class="ht">&lt;h4&gt;</span>MonSite<span class="ht">&lt;/h4&gt;</span>
+      <span class="ht">&lt;p&gt;</span>Votre partenaire web depuis 2020.<span class="ht">&lt;/p&gt;</span>
+    <span class="ht">&lt;/div&gt;</span>
+    <span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"f-col"</span><span class="ht">&gt;</span>
+      <span class="ht">&lt;h4&gt;</span>Navigation<span class="ht">&lt;/h4&gt;</span>
+      <span class="ht">&lt;ul&gt;&lt;li&gt;&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span><span class="ht">&gt;</span>Accueil<span class="ht">&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</span>
+    <span class="ht">&lt;/div&gt;</span>
+    <span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"f-col"</span><span class="ht">&gt;</span>
+      <span class="ht">&lt;h4&gt;</span>Contact<span class="ht">&lt;/h4&gt;</span>
+      <span class="ht">&lt;p&gt;</span>contact@monsite.sn<span class="ht">&lt;/p&gt;</span>
+    <span class="ht">&lt;/div&gt;</span>
+  <span class="ht">&lt;/div&gt;</span>
+  <span class="ht">&lt;div</span> <span class="ha">class</span>=<span class="hv">"footer-bas"</span><span class="ht">&gt;</span>
+    <span class="ht">&lt;p&gt;</span>© 2024 MonSite<span class="ht">&lt;/p&gt;</span>
+  <span class="ht">&lt;/div&gt;</span>
+<span class="ht">&lt;/footer&gt;</span>`,
+  previewHTML:`<footer class="footer"><div class="footer-inner"><div class="f-col"><h4>MonSite</h4><p>Votre partenaire web depuis 2020.</p></div><div class="f-col"><h4>Navigation</h4><ul><li><a href="#">Accueil</a></li><li><a href="#">Services</a></li><li><a href="#">Contact</a></li></ul></div><div class="f-col"><h4>Contact</h4><p>contact@monsite.sn</p><p>+221 77 000 00 00</p></div></div><div class="footer-bas"><p>© 2024 MonSite — Tous droits réservés</p></div></footer>`,
+  previewCSS:`*{box-sizing:border-box;}.footer{background:#111827;color:#9ca3af;font-family:Arial,sans-serif;}.footer-inner{max-width:900px;margin:0 auto;padding:40px 20px 20px;overflow:hidden;}.f-col{float:left;width:33.33%;padding-right:30px;}.f-col h4{color:#fff;font-size:15px;margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid #374151;}.f-col ul{list-style:none;padding:0;}.f-col ul li{margin-bottom:8px;}.f-col a{color:#9ca3af;text-decoration:none;}.f-col p{font-size:14px;line-height:1.7;}.footer-bas{text-align:center;padding:15px 20px;border-top:1px solid #374151;font-size:13px;color:#6b7280;}`,
+  metaphor:"Le footer c'est comme le <strong>bas d'une lettre officielle</strong> : en haut tu as le contenu principal, et en bas tu mets les coordonnées, mentions légales, et informations secondaires. La barre border-top est comme la ligne de séparation qui indique 'ici commence le bas de page'.",
+  props:[
+    {name:"border-top / border-bottom",desc:"Bordure sur un seul côté. Parfait pour créer des séparateurs visuels subtils.",ex:"border-top: 1px solid #374151;\nborder-bottom: 2px solid #ff6f00;"},
+    {name:"padding-bottom: 8px + border-bottom",desc:"Combinaison classique pour souligner un titre. Espace entre le texte et la ligne.",ex:".titre {\n  padding-bottom: 8px;\n  border-bottom: 1px solid #ccc;\n  margin-bottom: 15px;\n}"},
+    {name:"font-size: 13px",desc:"Les textes de copyright et légaux font souvent 12-14px pour indiquer leur importance secondaire.",ex:".copyright { font-size: 13px; color: #999; }"},
+  ],
+  recap:[
+    {prop:"float: left",val:"Colonnes côte à côte"},
+    {prop:"width: 33.33%",val:"3 colonnes égales"},
+    {prop:"border-top",val:"Séparateur visuel"},
+    {prop:"overflow: hidden",val:"Clearfix"},
+    {prop:"padding-right",val:"Espace entre cols"},
+    {prop:"font-size: 13px",val:"Texte secondaire"},
+  ],
+  schema:`Structure du Footer :
+
+<footer>
+  <div class="footer-inner">  ← overflow:hidden (clearfix)
+    <div class="f-col">...</div>  ← float:left  width:33.33%
+    <div class="f-col">...</div>  ← float:left  width:33.33%
+    <div class="f-col">...</div>  ← float:left  width:33.33%
+  </div>
+  <div class="footer-bas">     ← border-top + text-align:center
+    <p>© 2024...</p>
+  </div>
+</footer>`,
+  tip:"✅ Utilise des couleurs de texte plus claires (#9ca3af, #6b7280) dans le footer pour créer une hiérarchie visuelle subtile : contenu principal > footer.",
+  warn:"⚠️ Les liens du footer doivent aussi avoir text-decoration:none et color héritée pour ne pas apparaître en bleu souligné sur fond sombre.",
+  badge:{icon:"🦶",title:"Footer Maître !",desc:"Tu complètes tes pages avec un footer pro."},
+  xp:100
+},
+
+/* ── 8 ── Hover & Liens */
+{
+  title:"Liens & Effets Hover",
+  subtitle:"Rendre les éléments interactifs avec :hover, :active, et transition pour des animations fluides.",
+  num:"Leçon 9",
+  tags:[":hover",":active",":visited","transition","transform","cursor:pointer"],
+  section:"✨ Finitions",
+  htmlCode:`<body style="padding:30px; font-family:Arial">
+
+  <h3>Types de liens :</h3>
+
+  <!-- Lien avec hover -->
+  <p>
+    <a href="#" class="lien-simple">
+      Survoler ce lien avec la souris !
+    </a>
+  </p>
+
+  <!-- Bouton plein -->
+  <a href="#" class="btn-plein">
+    Bouton Plein
+  </a>
+
+  <!-- Bouton contour -->
+  <a href="#" class="btn-contour">
+    Bouton Contour
+  </a>
+
+  <br><br>
+  <!-- Liens de menu avec soulignement -->
+  <nav>
+    <a href="#" class="lien-menu">Accueil</a>
+    <a href="#" class="lien-menu">Blog</a>
+    <a href="#" class="lien-menu">Contact</a>
+  </nav>
+
+</body>`,
+  cssCode:`/* Lien simple avec changement de couleur */
+.lien-simple {
+  color: #1565c0;
+  text-decoration: none;
+  /* La transition DOIT être ici,
+     pas dans :hover ! */
+  transition: color 0.3s ease;
+}
+.lien-simple:hover {
+  color: #ff6f00;
+  text-decoration: underline;
+}
+
+/* Bouton plein */
+.btn-plein {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: #1565c0;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-right: 10px;
+  transition: background-color 0.2s, transform 0.15s;
+}
+.btn-plein:hover {
+  background-color: #0d47a1;
+  transform: translateY(-2px); /* monte légèrement */
+}
+.btn-plein:active {
+  transform: scale(0.97); /* s'enfonce au clic */
+}
+
+/* Bouton contour */
+.btn-contour {
+  display: inline-block;
+  padding: 12px 28px;
+  background-color: transparent;
+  color: #1565c0;
+  border: 2px solid #1565c0;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+}
+.btn-contour:hover {
+  background-color: #1565c0;
+  color: white;
+}
+
+/* Liens menu avec soulignement animé */
+.lien-menu {
+  display: inline-block;
+  padding: 8px 16px;
+  color: #555;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.lien-menu:hover {
+  color: #1565c0;
+  border-bottom-color: #1565c0;
+}`,
+  htmlDisplay:`<span class="ht">&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span> <span class="ha">class</span>=<span class="hv">"lien-simple"</span><span class="ht">&gt;</span>Survoler ce lien !<span class="ht">&lt;/a&gt;</span>
+
+<span class="ht">&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span> <span class="ha">class</span>=<span class="hv">"btn-plein"</span><span class="ht">&gt;</span>Bouton Plein<span class="ht">&lt;/a&gt;</span>
+
+<span class="ht">&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span> <span class="ha">class</span>=<span class="hv">"btn-contour"</span><span class="ht">&gt;</span>Bouton Contour<span class="ht">&lt;/a&gt;</span>
+
+<span class="ht">&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span> <span class="ha">class</span>=<span class="hv">"lien-menu"</span><span class="ht">&gt;</span>Accueil<span class="ht">&lt;/a&gt;</span>
+<span class="ht">&lt;a</span> <span class="ha">href</span>=<span class="hv">"#"</span> <span class="ha">class</span>=<span class="hv">"lien-menu"</span><span class="ht">&gt;</span>Blog<span class="ht">&lt;/a&gt;</span>`,
+  previewHTML:`<h3 style="margin-bottom:15px">Types de liens :</h3><p style="margin-bottom:20px"><a href="#" class="lien-simple">Survoler ce lien avec la souris !</a></p><a href="#" class="btn-plein">Bouton Plein</a><a href="#" class="btn-contour">Bouton Contour</a><br><br><nav><a href="#" class="lien-menu">Accueil</a><a href="#" class="lien-menu">Blog</a><a href="#" class="lien-menu">Contact</a></nav>`,
+  previewCSS:`body{padding:30px;font-family:Arial;}.lien-simple{color:#1565c0;text-decoration:none;transition:color 0.3s;}.lien-simple:hover{color:#ff6f00;text-decoration:underline;}.btn-plein{display:inline-block;padding:12px 28px;background:#1565c0;color:white;text-decoration:none;border-radius:6px;margin-right:10px;transition:background 0.2s,transform 0.15s;}.btn-plein:hover{background:#0d47a1;transform:translateY(-2px);}.btn-plein:active{transform:scale(0.97);}.btn-contour{display:inline-block;padding:12px 28px;background:transparent;color:#1565c0;border:2px solid #1565c0;text-decoration:none;border-radius:6px;transition:all 0.25s;}.btn-contour:hover{background:#1565c0;color:white;}.lien-menu{display:inline-block;padding:8px 16px;color:#555;text-decoration:none;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s;}.lien-menu:hover{color:#1565c0;border-bottom-color:#1565c0;}`,
+  metaphor:"Le <strong>:hover</strong> c'est comme un bouton d'ascenseur qui s'allume quand tu appuies dessus. La <strong>transition</strong> c'est la vitesse de l'animation — sans elle, le changement est instantané et brutal. Avec transition:0.3s, le changement est fluide comme une porte qui s'ouvre doucement. <strong>:active</strong> c'est le moment précis où tu appuies — le bouton s'enfonce !",
+  props:[
+    {name:":hover",desc:"Pseudo-classe activée quand la souris survole l'élément. Sur mobile (sans souris) le :hover ne s'active pas de la même façon.",ex:".bouton:hover {\n  background-color: darkblue;\n}"},
+    {name:":active",desc:"Activé pendant la fraction de seconde où l'utilisateur clique (mousedown). Donne un effet de 'bouton enfoncé'.",ex:".bouton:active {\n  transform: scale(0.95);\n}"},
+    {name:":visited",desc:"Style d'un lien déjà visité par l'utilisateur. Par défaut, les navigateurs le colorent en violet.",ex:"a:visited { color: #7b1fa2; }"},
+    {name:"transition",desc:"Anime le changement entre deux états. Syntaxe : propriété | durée | timing-function. La transition DOIT être sur l'élément, PAS sur :hover !",ex:"transition: color 0.3s ease;\ntransition: all 0.25s;\ntransition: background 0.2s, transform 0.15s;"},
+    {name:"transform: translateY()",desc:"Déplace l'élément verticalement sans changer la mise en page. translateY(-2px) fait monter de 2px au survol.",ex:"transform: translateY(-2px); /* monte */\ntransform: translateY(2px);  /* descend */\ntransform: scale(0.97);      /* réduit */"},
+    {name:"cursor: pointer",desc:"Change le curseur en main cliquable. À mettre sur les éléments cliquables qui ne sont pas des <a> ou <button>.",ex:".carte-cliquable { cursor: pointer; }"},
+  ],
+  recap:[
+    {prop:":hover",val:"Au survol souris"},
+    {prop:":active",val:"Au clic"},
+    {prop:":visited",val:"Lien déjà visité"},
+    {prop:"transition",val:"Animation fluide"},
+    {prop:"transform: scale()",val:"Agrandir/réduire"},
+    {prop:"translateY()",val:"Déplacer vertical"},
+  ],
+  schema:`Ordre correct des pseudo-classes (LoVe-HA) :
+  a:link    { }  ← lien non visité
+  a:visited { }  ← lien déjà visité
+  a:hover   { }  ← survol
+  a:active  { }  ← au clic
+
+La transition DOIT être sur l'élément de base :
+  .btn { transition: background 0.3s; }  ← ✓ BON
+  .btn:hover { transition: ... }         ← ✗ MAUVAIS
+  (Sans ça, l'animation ne marche que dans un sens)`,
+  tip:"✅ transition: all 0.25s ease; anime TOUTES les propriétés en même temps. Pratique mais peut être lent. Préfère nommer les propriétés spécifiques.",
+  warn:"⚠️ Ne mets JAMAIS la propriété transition dans :hover uniquement. Elle doit être sur l'élément normal pour que l'animation joue dans les deux sens (entrée ET sortie du survol).",
+  badge:{icon:"✨",title:"Animateur CSS !",desc:"Tes pages sont maintenant interactives."},
+  xp:120
+},
+
+/* ── 9 ── Site Complet */
+{
+  title:"🏆 Site Web Complet Assemblé !",
+  subtitle:"On assemble tout ce qu'on a appris : navbar, hero, services, footer. C'est ton premier vrai site !",
+  num:"Leçon 10",
+  tags:["navbar","hero","colonnes","footer","hover","float","box-sizing"],
+  section:"🚀 Projet Final",
+  htmlCode:`<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>MonSite — Agence Web</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 1. NAVBAR -->
+<nav class="navbar">
+  <div id="logo">MonSite</div>
+  <ul id="nav-liens">
+    <li><a href="#">Accueil</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">À propos</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- 2. HERO -->
+<section class="hero">
+  <div class="hero-contenu">
+    <h1>Bienvenue sur MonSite</h1>
+    <p>Nous créons des expériences
+       web modernes et mémorables.</p>
+    <a href="#" class="btn-hero">
+      Découvrir →
+    </a>
+  </div>
+</section>
+
+<!-- 3. SERVICES (3 colonnes) -->
+<section class="services">
+  <h2>Nos Services</h2>
+  <div class="rangee">
+    <div class="col">
+      <h3>🎨 Design</h3>
+      <p>Interfaces modernes.</p>
+    </div>
+    <div class="col">
+      <h3>⚙️ Dev</h3>
+      <p>Code de qualité.</p>
+    </div>
+    <div class="col">
+      <h3>📈 Marketing</h3>
+      <p>Visibilité maximale.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="f-col">
+      <h4>MonSite</h4>
+      <p>Votre partenaire web.</p>
+    </div>
+    <div class="f-col">
+      <h4>Liens</h4>
+      <ul>
+        <li><a href="#">Accueil</a></li>
+        <li><a href="#">Services</a></li>
+      </ul>
+    </div>
+    <div class="f-col">
+      <h4>Contact</h4>
+      <p>info@monsite.sn</p>
+    </div>
+  </div>
+  <div class="footer-bas">
+    <p>© 2024 MonSite</p>
+  </div>
+</footer>
+
+</body>
+</html>`,
+  cssCode:`/* ===== 1. RESET & BASE ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; }
+
+/* ===== 2. NAVBAR ===== */
+.navbar {
+  background-color: #1a237e;
+  height: 65px;
+  padding: 0 40px;
+  overflow: hidden;
+}
+#logo {
+  float: left;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 65px;
+}
+#nav-liens {
+  float: right;
+  list-style: none;
+  line-height: 65px;
+}
+#nav-liens li { display: inline-block; }
+#nav-liens a {
+  color: #b3c5ff;
+  text-decoration: none;
+  padding: 0 15px;
+  transition: color 0.2s;
+}
+#nav-liens a:hover { color: white; }
+
+/* ===== 3. HERO ===== */
+.hero {
+  height: 380px;
+  background-image: url('https://picsum.photos/1200/400?random=55');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.hero-contenu {
+  position: relative;
+  text-align: center;
+  padding-top: 90px;
+  color: white;
+}
+.hero-contenu h1 { font-size: 40px; margin-bottom: 15px; }
+.hero-contenu p  { font-size: 18px; margin-bottom: 25px; opacity: 0.9; }
+.btn-hero {
+  display: inline-block;
+  padding: 13px 35px;
+  background-color: #ff6f00;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.btn-hero:hover { background-color: #e65100; }
+
+/* ===== 4. SERVICES ===== */
+.services {
+  padding: 50px 40px;
+  background-color: #f5f5f5;
+}
+.services h2 {
+  text-align: center;
+  color: #1a237e;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+.rangee {
+  max-width: 900px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.col {
+  float: left;
+  width: 33.33%;
+  padding: 25px 20px;
+  text-align: center;
+  background: white;
+  border: 1px solid #e0e0e0;
+  transition: box-shadow 0.2s;
+}
+.col:hover { box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+.col h3 { color: #283593; margin-bottom: 10px; }
+.col p  { color: #666; line-height: 1.6; }
+
+/* ===== 5. FOOTER ===== */
+.footer {
+  background-color: #111827;
+  color: #9ca3af;
+  font-family: Arial, sans-serif;
+}
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px 20px;
+  overflow: hidden;
+}
+.f-col {
+  float: left;
+  width: 33.33%;
+  padding-right: 30px;
+}
+.f-col h4 {
+  color: white;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #374151;
+}
+.f-col ul { list-style: none; padding: 0; }
+.f-col ul li { margin-bottom: 8px; }
+.f-col a { color: #9ca3af; text-decoration: none; }
+.f-col a:hover { color: white; }
+.f-col p { font-size: 14px; line-height: 1.7; }
+.footer-bas {
+  text-align: center;
+  padding: 15px;
+  border-top: 1px solid #374151;
+  font-size: 13px;
+  color: #6b7280;
+}`,
+  htmlDisplay:`<span class="hc">&lt;!-- SITE COMPLET ASSEMBLÉ --&gt;</span>
+<span class="ht">&lt;nav</span> <span class="ha">class</span>=<span class="hv">"navbar"</span><span class="ht">&gt;</span>...<span class="ht">&lt;/nav&gt;</span>
+<span class="ht">&lt;section</span> <span class="ha">class</span>=<span class="hv">"hero"</span><span class="ht">&gt;</span>...<span class="ht">&lt;/section&gt;</span>
+<span class="ht">&lt;section</span> <span class="ha">class</span>=<span class="hv">"services"</span><span class="ht">&gt;</span>...<span class="ht">&lt;/section&gt;</span>
+<span class="ht">&lt;footer</span> <span class="ha">class</span>=<span class="hv">"footer"</span><span class="ht">&gt;</span>...<span class="ht">&lt;/footer&gt;</span>
+<span class="hc">/* Voir l'onglet index.html pour tout le code */</span>`,
+  previewHTML:`<nav class="navbar"><div id="logo">MonSite</div><ul id="nav-liens"><li><a href="#">Accueil</a></li><li><a href="#">Services</a></li><li><a href="#">À propos</a></li><li><a href="#">Contact</a></li></ul></nav><section class="hero"><div class="hero-contenu"><h1>Bienvenue sur MonSite</h1><p>Nous créons des expériences web modernes et mémorables.</p><a href="#" class="btn-hero">Découvrir →</a></div></section><section class="services"><h2>Nos Services</h2><div class="rangee"><div class="col"><h3>🎨 Design</h3><p>Interfaces modernes.</p></div><div class="col"><h3>⚙️ Dev</h3><p>Code de qualité.</p></div><div class="col"><h3>📈 Marketing</h3><p>Visibilité maximale.</p></div></div></section><footer class="footer"><div class="footer-inner"><div class="f-col"><h4>MonSite</h4><p>Votre partenaire web.</p></div><div class="f-col"><h4>Liens</h4><ul><li><a href="#">Accueil</a></li><li><a href="#">Services</a></li></ul></div><div class="f-col"><h4>Contact</h4><p>info@monsite.sn</p></div></div><div class="footer-bas"><p>© 2024 MonSite</p></div></footer>`,
+  previewCSS:`*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;}.navbar{background:#1a237e;height:65px;padding:0 40px;overflow:hidden;}#logo{float:left;color:white;font-size:22px;font-weight:bold;line-height:65px;}#nav-liens{float:right;list-style:none;line-height:65px;}#nav-liens li{display:inline-block;}#nav-liens a{color:#b3c5ff;text-decoration:none;padding:0 15px;transition:color 0.2s;}#nav-liens a:hover{color:white;}.hero{height:380px;background-image:url('https://picsum.photos/1200/400?random=55');background-size:cover;background-position:center;position:relative;}.hero::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);}.hero-contenu{position:relative;text-align:center;padding-top:90px;color:white;}.hero-contenu h1{font-size:40px;margin-bottom:15px;}.hero-contenu p{font-size:18px;margin-bottom:25px;opacity:0.9;}.btn-hero{display:inline-block;padding:13px 35px;background:#ff6f00;color:white;text-decoration:none;border-radius:5px;font-size:16px;font-weight:bold;transition:background 0.2s;}.btn-hero:hover{background:#e65100;}.services{padding:50px 40px;background:#f5f5f5;}.services h2{text-align:center;color:#1a237e;margin-bottom:30px;font-size:28px;}.rangee{max-width:900px;margin:0 auto;overflow:hidden;}.col{float:left;width:33.33%;padding:25px 20px;text-align:center;background:white;border:1px solid #e0e0e0;transition:box-shadow 0.2s;}.col:hover{box-shadow:0 5px 20px rgba(0,0,0,0.1);}.col h3{color:#283593;margin-bottom:10px;}.col p{color:#666;line-height:1.6;}.footer{background:#111827;color:#9ca3af;}.footer-inner{max-width:900px;margin:0 auto;padding:40px 20px 20px;overflow:hidden;}.f-col{float:left;width:33.33%;padding-right:30px;}.f-col h4{color:white;margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid #374151;}.f-col ul{list-style:none;padding:0;}.f-col ul li{margin-bottom:8px;}.f-col a{color:#9ca3af;text-decoration:none;}.f-col a:hover{color:white;}.f-col p{font-size:14px;line-height:1.7;}.footer-bas{text-align:center;padding:15px;border-top:1px solid #374151;font-size:13px;color:#6b7280;}`,
+  metaphor:"Tu viens de construire ta <strong>première maison complète</strong> ! La navbar c'est la porte d'entrée et l'adresse. Le hero c'est la façade qui attire l'œil. Les services c'est les pièces à l'intérieur. Le footer c'est la plaque avec tes coordonnées. Chaque leçon était une brique. Maintenant tu sais construire !",
+  props:[
+    {name:"* { box-sizing: border-box }",desc:"Le reset universel. Toujours en premier dans tout projet CSS.",ex:"* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n}"},
+    {name:"Récap Navbar",desc:"float:left (logo) + float:right (liens) + overflow:hidden (parent) + display:inline-block (li) + line-height=height (centrage vertical).",ex:"/* Les 5 ingrédients de la navbar classique */"},
+    {name:"Récap Hero",desc:"background-image + background-size:cover + position:relative + ::before (voile) + position:relative sur le contenu.",ex:"/* Les 5 couches du hero */"},
+    {name:"Récap Colonnes",desc:"float:left + width:33.33% + box-sizing:border-box + overflow:hidden sur parent.",ex:"/* Les 4 règles des colonnes float */"},
+    {name:"Récap Hover",desc:"transition sur l'élément + changement dans :hover.",ex:".btn { transition: background 0.2s; }\n.btn:hover { background: darkblue; }"},
+  ],
+  recap:[
+    {prop:"box-sizing: border-box",val:"Reset universel"},
+    {prop:"float + overflow",val:"Navbar & colonnes"},
+    {prop:"background-size: cover",val:"Image de fond hero"},
+    {prop:"position: relative/absolute",val:"Voile & superposition"},
+    {prop:":hover + transition",val:"Interactions fluides"},
+    {prop:"margin: 0 auto",val:"Centrage horizontal"},
+  ],
+  schema:`Structure complète du site :
+
+┌──────────────────────────────┐
+│  <nav>    NAVBAR             │ float:left + float:right
+├──────────────────────────────┤
+│  <section class="hero">      │ background-image + ::before
+│    IMAGE + VOILE + TEXTE     │
+├──────────────────────────────┤
+│  <section class="services">  │ float:left × 3 colonnes
+│  [col 33%] [col 33%] [col 33%]│
+├──────────────────────────────┤
+│  <footer>                    │ float:left × 3 colonnes
+│  [col] [col] [col]           │
+│  © copyright                 │ border-top
+└──────────────────────────────┘`,
+  tip:"🚀 La prochaine étape : Flexbox ! Il remplace float pour les navbars et colonnes, de façon bien plus simple et puissante. Tu es maintenant prêt !",
+  warn:"🎉 FÉLICITATIONS ! Tu as terminé le cours CSS sans Flexbox de Coach Mbengue Academy. Tu sais construire un vrai site web complet !",
+  badge:{icon:"🏆",title:"Diplômé CSS !",desc:"Tu as terminé le cours complet !"},
+  xp:200
+}
+];
+
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+let current = 0;
+let xp = 0;
+let done = new Set();
+let fromContact = false; // pour savoir où revenir depuis contact
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+function startApp(){
+  document.getElementById('landing').style.display='none';
+  document.getElementById('app').classList.add('visible');
+  buildSidebar();
+  renderLesson(0);
+}
+
+function goLanding(){
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('contact-page').classList.remove('visible');
+  document.getElementById('landing').style.display='flex';
+}
+
+function prevStep(){
+  if(current>0) renderLesson(current-1);
+}
+function nextStep(){
+  if(current<lessons.length-1) renderLesson(current+1);
+  else showContact();
+}
+
+function buildSidebar(){
+  const nav=document.getElementById('sidebar-nav');
+  nav.innerHTML='';
+  let lastSect='';
+  lessons.forEach((l,i)=>{
+    if(l.section!==lastSect){
+      if(lastSect) nav.innerHTML+=`<div class="nav-sep"></div>`;
+      nav.innerHTML+=`<div class="nav-section">${l.section}</div>`;
+      lastSect=l.section;
+    }
+    nav.innerHTML+=`<div class="nav-item" id="nav-${i}" onclick="renderLesson(${i})">
+      <span class="nav-num">${i+1}</span>
+      ${l.title}
+      <div class="nav-check">✓</div>
+    </div>`;
+  });
+}
+
+/* ═══════════════════════════════════════════
+   RENDER LEÇON
+═══════════════════════════════════════════ */
+function renderLesson(i){
+  // Update state
+  if(current!==undefined){
+    const oldNav=document.getElementById(`nav-${current}`);
+    if(oldNav) oldNav.classList.remove('active');
+  }
+  current=i;
+  const l=lessons[i];
+
+  // Sidebar highlight
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  const nav=document.getElementById(`nav-${i}`);
+  if(nav) nav.classList.add('active');
+
+  // Progress
+  const pct=Math.round(((i+1)/lessons.length)*100);
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-pct').textContent=`Leçon ${i+1}/${lessons.length}`;
+
+  // XP display
+  document.getElementById('xp-display').textContent=`⭐ ${xp} XP`;
+
+  // Banner
+  const tagsHtml=l.tags.map(t=>`<span class="stag ${t.startsWith(':')||t.includes('color')||t.includes('font')||t.includes('margin')||t.includes('padding')||t.includes('float')||t.includes('border')||t.includes('background')||t.includes('position')||t.includes('display')||t.includes('text')||t.includes('cursor')||t.includes('transition')||t.includes('transform')||t.includes('overflow')||t.includes('width')||t.includes('height')||t.includes('list')||t.includes('box')? 'stag-css':'stag-html'}">${t}</span>`).join('');
+  document.getElementById('step-banner').innerHTML=`
+    <div class="step-meta">
+      <span class="step-num-tag">${l.num} — ${l.section}</span>
+      <div class="step-tags">${tagsHtml}</div>
+    </div>
+    <h2>${l.title}</h2>
+    <p>${l.subtitle}</p>`;
+
+  // Bottom bar
+  document.getElementById('bb-info').textContent=`${l.num} • ${l.xp} XP à gagner`;
+  const btnNext=document.getElementById('btn-next');
+  const btnPrev=document.getElementById('btn-prev');
+  btnPrev.style.display=i===0?'none':'';
+  if(i===lessons.length-1){
+    btnNext.className='btn-nav btn-done';
+    btnNext.textContent='🏆 Terminer le cours';
+  } else {
+    btnNext.className='btn-nav btn-next';
+    btnNext.textContent='Suivant →';
+  }
+
+  // Build workspace
+  buildWorkspace(i,l);
+}
+
+function buildWorkspace(i,l){
+  const ws=document.getElementById('workspace');
+  ws.innerHTML=`
+    <!-- Tab bar LEFT -->
+    <div class="tab-bar-left">
+      <div class="wtab t-html active" id="t-html-${i}" onclick="switchLeft(${i},'html')">📄 index.html</div>
+      <div class="wtab t-css"         id="t-css-${i}"  onclick="switchLeft(${i},'css')">🎨 style.css</div>
+    </div>
+    <!-- Tab bar RIGHT -->
+    <div class="tab-bar-right">
+      <div class="wtab t-prev active" id="t-prev-${i}" onclick="switchRight(${i},'prev')">▶ Rendu</div>
+      <div class="wtab t-expl"        id="t-expl-${i}" onclick="switchRight(${i},'expl')">📖 Explications</div>
+      <div class="wtab t-meta"        id="t-meta-${i}" onclick="switchRight(${i},'meta')">🗺️ Mémo</div>
+    </div>
+
+    <!-- HTML panel (read-only display) -->
+    <div class="panel border-right active" id="p-html-${i}">
+      <div class="code-ro"><pre>${l.htmlDisplay}</pre></div>
+    </div>
+
+    <!-- CSS panel (editable) -->
+    <div class="panel border-right" id="p-css-${i}">
+      <div class="editor-wrap">
+        <div class="editor-toolbar">
+          <span class="editor-label">✍️ MODIFIE LE CSS ET CLIQUE SUR EXÉCUTER</span>
+          <button class="editor-run" onclick="runCSS(${i})">▶ Exécuter</button>
+        </div>
+        <textarea class="code-textarea" id="css-editor-${i}" spellcheck="false">${l.cssCode}</textarea>
+      </div>
+    </div>
+
+    <!-- Preview panel -->
+    <div class="preview-panel active" id="p-prev-${i}">
+      <iframe id="iframe-${i}" style="width:100%;height:100%;border:none;"></iframe>
+    </div>
+
+    <!-- Explain panel -->
+    <div class="explain-panel" id="p-expl-${i}">
+      ${buildExplain(l)}
+    </div>
+
+    <!-- Meta panel -->
+    <div class="meta-panel" id="p-meta-${i}">
+      ${buildMeta(l)}
+    </div>
+  `;
+
+  // Load iframe
+  setTimeout(()=>loadPreview(i,l),100);
+}
+
+function loadPreview(i,l,customCSS){
+  const iframe=document.getElementById(`iframe-${i}`);
+  if(!iframe) return;
+  const css=customCSS||l.previewCSS;
+  iframe.srcdoc=`<!DOCTYPE html><html><head><style>${css}</style></head><body>${l.previewHTML}</body></html>`;
+}
+
+function runCSS(i){
+  const l=lessons[i];
+  const css=document.getElementById(`css-editor-${i}`).value;
+  loadPreview(i,l,css);
+  // Switch to preview
+  switchRight(i,'prev');
+  // Award XP if first time
+  if(!done.has(i)){
+    done.add(i);
+    xp+=l.xp;
+    document.getElementById('xp-display').textContent=`⭐ ${xp} XP`;
+    // Mark nav done
+    const navEl=document.getElementById(`nav-${i}`);
+    if(navEl) navEl.classList.add('done');
+    // Show badge
+    showBadge(l.badge.icon,l.badge.title,l.badge.desc);
+  }
+}
+
+function buildExplain(l){
+  let html=`<div class="metaphor-box"><div class="metaphor-title">💡 Métaphore du quotidien</div><div class="metaphor-text">${l.metaphor}</div></div>`;
+  if(l.tip) html+=`<div class="tip-box">✅ ${l.tip.replace('✅ ','')}</div>`;
+  if(l.warn) html+=`<div class="warn-box">⚠️ ${l.warn.replace('⚠️ ','')}</div>`;
+  html+=`<div class="prop-section-title">📚 Propriétés CSS expliquées</div>`;
+  l.props.forEach(p=>{
+    html+=`<div class="prop-card">
+      <div class="prop-name">${p.name}</div>
+      <div class="prop-desc">${p.desc}</div>
+      <div class="prop-ex">${p.ex.replace(/\n/g,'<br>')}</div>
+    </div>`;
+  });
+  return html;
+}
+
+function buildMeta(l){
+  let html=`<div class="recap-card"><h4>📋 Récapitulatif des propriétés</h4><div class="recap-grid">`;
+  l.recap.forEach(r=>{
+    html+=`<div class="recap-item"><div class="ri-prop">${r.prop}</div><div class="ri-val">${r.val}</div></div>`;
+  });
+  html+=`</div></div>`;
+  if(l.schema){
+    html+=`<div class="schema-box"><pre style="white-space:pre-wrap;font-size:0.73rem">${l.schema}</pre></div>`;
+  }
+  return html;
+}
+
+/* ═══════════════════════════════════════════
+   PANEL SWITCHES
+═══════════════════════════════════════════ */
+function switchLeft(i,which){
+  ['html','css'].forEach(t=>{
+    document.getElementById(`p-${t}-${i}`)?.classList.remove('active');
+    document.getElementById(`t-${t}-${i}`)?.classList.remove('active');
+  });
+  document.getElementById(`p-${which}-${i}`)?.classList.add('active');
+  document.getElementById(`t-${which}-${i}`)?.classList.add('active');
+}
+
+function switchRight(i,which){
+  ['prev','expl','meta'].forEach(t=>{
+    document.getElementById(`p-${t}-${i}`)?.classList.remove('active');
+    document.getElementById(`t-${t}-${i}`)?.classList.remove('active');
+  });
+  document.getElementById(`p-${which}-${i}`)?.classList.add('active');
+  document.getElementById(`t-${which}-${i}`)?.classList.add('active');
+}
+
+/* ═══════════════════════════════════════════
+   BADGE
+═══════════════════════════════════════════ */
+function showBadge(icon,title,desc){
+  const p=document.getElementById('badge-popup');
+  document.getElementById('badge-icon').textContent=icon;
+  document.getElementById('badge-title').textContent=title;
+  document.getElementById('badge-desc').textContent=desc;
+  p.classList.add('show');
+  setTimeout(()=>p.classList.remove('show'),3500);
+}
+
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+function showContact(){
+  fromContact=true;
+  document.getElementById('landing').style.display='none';
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('contact-page').classList.add('visible');
+}
+
+function hideContact(){
+  document.getElementById('contact-page').classList.remove('visible');
+  document.getElementById('form-success').classList.remove('show');
+  document.getElementById('contact-form-wrap').style.display='block';
+  if(done.size>0 || fromContact){
+    document.getElementById('app').classList.add('visible');
+  } else {
+    document.getElementById('landing').style.display='flex';
+  }
+}
+
+function sendContact(){
+  const name=document.getElementById('f-name').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const msg=document.getElementById('f-msg').value.trim();
+  if(!name||!email||!msg){alert('Merci de remplir tous les champs obligatoires (*)');return;}
+  document.getElementById('contact-form-wrap').style.display='none';
+  document.getElementById('form-success').classList.add('show');
+}
+</script>
+</body>
+</html>
